@@ -3,8 +3,7 @@
  */
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
-#include "typedefs.h"
 #include <gtk/gtk.h>
-void select_level(GtkButton *button, gpointer user_data);
+void select_difficulty(GtkButton *button, gpointer user_data);
 
 #endif

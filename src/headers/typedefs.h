@@ -1,6 +1,6 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
-
+#include <gtk/gtk.h>
 typedef enum Direction { HORIZONTAL, VERTICAL } Direction;
 typedef enum Difficulty { EASY, MEDIUM, HARD } Difficulty;
 typedef struct {
@@ -28,4 +28,8 @@ typedef struct {
   char *title;
 } CreatePageParams;
 
+typedef struct {
+  Table *table;
+  GtkWidget *stack;
+} SelectDifficultyParams;
 #endif // DATA_H

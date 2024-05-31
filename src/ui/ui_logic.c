@@ -21,35 +21,41 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   GtkWidget *window = gtk_application_window_new(app);
   gtk_window_set_title(GTK_WINDOW(window), "Word Puzzle Game");
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
-
+  SelectDifficultyParams *start_screen_params =
+      malloc(sizeof(SelectDifficultyParams));
   // Create Stack
-  GtkWidget *stack = gtk_stack_new();
-  gtk_stack_set_transition_type(GTK_STACK(stack),
+  start_screen_params->stack = gtk_stack_new();
+  start_screen_params->table = table;
+  gtk_stack_set_transition_type(GTK_STACK(start_screen_params->stack),
                                 GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
-  gtk_window_set_child(GTK_WINDOW(window), stack);
+  gtk_window_set_child(GTK_WINDOW(window), start_screen_params->stack);
 
   // Home Page
   CreatePageParams home_page_params = {"home_page", "Home Page"};
-  GtkWidget *home_page = create_page(stack, home_page_params);
+  GtkWidget *home_page =
+      create_page(start_screen_params->stack, home_page_params);
 
   // Start Game Button
   GtkWidget *start_game_button = gtk_button_new_with_label("Start Game");
-  GtkWidget *start_screen_grid = start_screen(table);
+  GtkWidget *start_screen_grid = start_screen(start_screen_params);
   gtk_box_append(GTK_BOX(home_page), start_screen_grid);
 
-  // Add home page to stack
+  // Add home page to start_screen_params->stack
 
   // Create the game page
   CreatePageParams game_page_garams = {"game_page", "Game Page"};
-  GtkWidget *game_page = create_page(stack, game_page_garams);
+  GtkWidget *game_page =
+      create_page(start_screen_params->stack, game_page_garams);
 
   GtkWidget *label = gtk_label_new("Game Screen");
   // Add the game page to the stack
 
   // Connect the "Start Game" button to the callback function
   g_signal_connect(start_game_button, "clicked",
-                   G_CALLBACK(on_start_game_button_clicked), stack);
-  gtk_stack_set_visible_child_name(GTK_STACK(stack), "home_page");
+                   G_CALLBACK(on_start_game_button_clicked),
+                   start_screen_params->stack);
+  gtk_stack_set_visible_child_name(GTK_STACK(start_screen_params->stack),
+                                   "home_page");
 
   GtkWidget *grid = gtk_grid_new();
   gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);

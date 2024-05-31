@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
   // The length of array is equal to the number of words in array.
   TableData game_data[5];
-  Difficulty difficulty;
+  Difficulty difficulty = MEDIUM;
   int total_words = sizeof(words) / sizeof(words[0]);
 
   int longest_word_length = longest_word_in_array(words, total_words);

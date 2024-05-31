@@ -5,18 +5,20 @@
 #include "start_screen.h"
 #include "callbacks.h"
 #include "typedefs.h"
-GtkWidget *start_screen(Table *table) {
-  CreatePageParams home_page_params = {"start_screen", "Start Game"};
+GtkWidget *start_screen(SelectDifficultyParams *select_difficulty_params) {
   GtkWidget *easy_button;
   GtkWidget *medium_button;
   GtkWidget *hard_button;
 
   easy_button = gtk_button_new_with_label("Easy");
-  g_signal_connect(easy_button, "clicked", G_CALLBACK(select_level), table);
+  g_signal_connect(easy_button, "clicked", G_CALLBACK(select_difficulty),
+                   select_difficulty_params);
   medium_button = gtk_button_new_with_label("Medium");
-  g_signal_connect(medium_button, "clicked", G_CALLBACK(select_level), table);
+  g_signal_connect(medium_button, "clicked", G_CALLBACK(select_difficulty),
+                   select_difficulty_params);
   hard_button = gtk_button_new_with_label("Hard");
-  g_signal_connect(hard_button, "clicked", G_CALLBACK(select_level), table);
+  g_signal_connect(hard_button, "clicked", G_CALLBACK(select_difficulty),
+                   select_difficulty_params);
 
   GtkWidget *grid = gtk_grid_new();
   GtkWidget *label = gtk_label_new("Select difficulty");
@@ -28,8 +30,10 @@ GtkWidget *start_screen(Table *table) {
   gtk_grid_attach(GTK_GRID(grid), easy_button, 0, 1, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), medium_button, 0, 2, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), hard_button, 0, 3, 1, 1);
+
   gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+
   gtk_widget_add_css_class(grid, "select-level-grid");
   gtk_widget_add_css_class(easy_button, "select-level-btn");
   gtk_widget_add_css_class(medium_button, "select-level-btn");
