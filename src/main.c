@@ -1,6 +1,7 @@
 #include "game/game_logic.h"
 #include "shared/typedefs.h"
 #include "ui/ui_logic.h"
+#include "utils/word_utils.h"
 #include <gtk/gtk.h>
 #include <stdlib.h>
 
