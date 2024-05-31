@@ -2,8 +2,8 @@
  * Source file for grid related utilities functions
  */
 #include "grid_utils.h"
+#include "headers/word_utils.h"
 #include "stdlib.h"
-#include "utils/word_utils.h"
 #include <ctype.h>
 bool validate_position(int *coords, int grid_length, SelectedWord word,
                        Direction direction, Table table) {

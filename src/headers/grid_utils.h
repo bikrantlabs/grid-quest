@@ -1,6 +1,6 @@
 #ifndef GRID_UTILS_H
 #define GRID_UTILS_H
-#include "shared/typedefs.h"
+#include "typedefs.h"
 #include <stdbool.h>
 
 int choose_random_position(int grid_length);

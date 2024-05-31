@@ -21,4 +21,10 @@ typedef struct {
   char *word;
   int word_length;
 } SelectedWord;
+
+typedef struct {
+  char *name;
+  char *title;
+} CreatePageParams;
+
 #endif // DATA_H

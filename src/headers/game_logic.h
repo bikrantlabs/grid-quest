@@ -1,7 +1,7 @@
 #ifndef GAME_LOGIC_H
 #define GAME_LOGIC_H
 
-#include "../shared/typedefs.h"
+#include "typedefs.h"
 #include <gtk/gtk.h>
 #include <stdbool.h>
 

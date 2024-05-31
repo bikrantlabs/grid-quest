@@ -1,5 +1,6 @@
-#include "../ui/ui_logic.h"
-#include "../shared/typedefs.h"
+#include "headers/ui_logic.h"
+#include "headers/typedefs.h"
+#include "pages.h"
 
 static GtkWidget ***buttons;
 void on_start_game_button_clicked(GtkButton *button, gpointer user_data) {
@@ -7,9 +8,11 @@ void on_start_game_button_clicked(GtkButton *button, gpointer user_data) {
   gtk_stack_set_visible_child_name(stack, "game_page");
 }
 static void on_button_clicked(GtkWidget *widget, gpointer data) {
-  gtk_button_set_label(GTK_BUTTON(widget), "0");
-  printf("Clicked");
-  gtk_widget_add_css_class(widget, "selected");
+  if (gtk_widget_has_css_class(widget, "selected")) {
+    gtk_widget_remove_css_class(widget, "selected");
+  } else {
+    gtk_widget_add_css_class(widget, "selected");
+  }
 }
 
 void setup_ui(GtkApplication *app, gpointer user_data) {
@@ -25,11 +28,8 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   gtk_window_set_child(GTK_WINDOW(window), stack);
 
   // Home Page
-  GtkWidget *home_page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-  gtk_widget_set_margin_top(home_page, 10);
-  gtk_widget_set_margin_bottom(home_page, 10);
-  gtk_widget_set_margin_start(home_page, 10);
-  gtk_widget_set_margin_end(home_page, 10);
+  CreatePageParams home_page_params = {"home_page", "Home Page"};
+  GtkWidget *home_page = create_page(stack, home_page_params);
 
   // Start Game Button
   GtkWidget *start_game_button = gtk_button_new_with_label("Start Game");
@@ -37,18 +37,13 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   gtk_box_append(GTK_BOX(home_page), start_game_button);
 
   // Add home page to stack
-  gtk_stack_add_titled(GTK_STACK(stack), home_page, "home_page", "Home Page");
 
   // Create the game page
-  GtkWidget *game_page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-  gtk_widget_set_margin_top(game_page, 10);
-  gtk_widget_set_margin_bottom(game_page, 10);
-  gtk_widget_set_margin_start(game_page, 10);
-  gtk_widget_set_margin_end(game_page, 10);
+  CreatePageParams game_page_garams = {"game_page", "Game Page"};
+  GtkWidget *game_page = create_page(stack, game_page_garams);
 
   GtkWidget *label = gtk_label_new("Game Screen");
   // Add the game page to the stack
-  gtk_stack_add_titled(GTK_STACK(stack), game_page, "game_page", "Game Page");
 
   // Connect the "Start Game" button to the callback function
   g_signal_connect(start_game_button, "clicked",
@@ -61,6 +56,9 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   gtk_box_append(GTK_BOX(game_page), grid);
   gtk_widget_set_halign(game_page, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(game_page, GTK_ALIGN_CENTER);
+
+  // Apply CSS
+  apply_css("../src/styles.css");
   // Allocate memory for buttons
   buttons = malloc(table->length * sizeof(GtkWidget **));
   for (int i = 0; i < table->length; ++i) {
@@ -68,13 +66,13 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   }
 
   // Create buttons and add to grid
-  printf("%c", table->table[1][2]);
   for (int i = 0; i < table->length; ++i) {
     for (int j = 0; j < table->length; ++j) {
       char label[2];
       label[0] = table->table[i][j];
       label[1] = '\0';
       buttons[i][j] = gtk_button_new_with_label(label);
+      gtk_widget_add_css_class(buttons[i][j], "characters");
       g_signal_connect(buttons[i][j], "clicked", G_CALLBACK(on_button_clicked),
                        NULL);
       gtk_grid_attach(GTK_GRID(grid), buttons[i][j], j, i, 1, 1);

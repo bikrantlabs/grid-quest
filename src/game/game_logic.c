@@ -1,5 +1,5 @@
-#include "shared/typedefs.h"
-#include "utils/grid_utils.h"
+#include "grid_utils.h"
+#include "typedefs.h"
 #include <string.h>
 
 void initialize_game(int grid_length, char **words, Table table,
