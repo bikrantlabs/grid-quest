@@ -95,16 +95,18 @@ int choose_random_position(int grid_length) {
   return position;
 }
 
-void place_word_in_table(SelectedWord word, const GameConfig config,
-                         GameState game_state) {
-  int *coords = game_state.coords;
+void place_word_in_table(SelectedWord word, int *coords,
+                         const GameConfig config, GameState game_state) {
   for (int i = 0; i <= word.word_length; i++) {
     if (game_state.word[i] == '\0') {
       continue;
     }
     if (game_state.direction == HORIZONTAL) {
       config.table[coords[0]][coords[1] + i] = toupper(game_state.word[i]);
+      game_state.coords[i] =
+          change_coordinate_to_position(coords, config.table_length);
     } else {
+
       config.table[coords[0] + i][coords[1]] = toupper(game_state.word[i]);
     }
   }

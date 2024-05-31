@@ -6,11 +6,13 @@ void initialize_game(GameConfig config) {
   Direction direction = HORIZONTAL;
   for (int i = 0; i < config.total_words; i++) {
     char *word = config.words[i];
+
     bool is_position_valid = false;
     SelectedWord selected_word;
     selected_word.word = config.words[i];
     selected_word.word_length = strlen(config.words[i]);
     GameState game_state;
+    game_state.coords = malloc(selected_word.word_length * sizeof(int));
     int *coords;
     if (direction == VERTICAL) {
       direction = HORIZONTAL;
@@ -28,9 +30,8 @@ void initialize_game(GameConfig config) {
       if (is_position_valid) {
 
         game_state.direction = direction;
-        game_state.coords = coords;
         game_state.word = selected_word.word;
-        place_word_in_table(selected_word, config, game_state);
+        place_word_in_table(selected_word, coords, config, game_state);
         config.game_state[i] = game_state;
       }
     }

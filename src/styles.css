@@ -1,27 +1,33 @@
 button.selected {
     background: lightblue;
-    color:black;
+    color: black;
 }
+
 button.characters {
-    min-height:100px;
-    min-width:100px;
-    font-size: 32px;
+    min-height: 70px;
+    min-width: 70px;
+    font-size: 24px;
 }
-.select-level-btn{
+
+.select-level-btn {
     margin-bottom: 10px;
 }
+
 .select-difficulty-label {
     font-size: 48px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
-.word_hints_grid{
-    margin-left:20px;
+
+.word_hints_grid {
+    margin-left: 20px;
 }
-.word_hint_label{
-    margin-bottom:20px;
-    font-size:32px;
+
+.word_hint_label {
+    margin-bottom: 20px;
+    font-size: 32px;
 }
+
 .word_hint {
-    margin-bottom:10px;
-    font-size:24px;
+    margin-bottom: 10px;
+    font-size: 24px;
 }

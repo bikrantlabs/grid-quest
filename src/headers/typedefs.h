@@ -42,4 +42,16 @@ typedef struct {
   char **words;
   int total_words;
 } RandomSelectedWords;
+
+typedef struct {
+  int clicked_count;
+  int *positions;
+  int max_size;
+} ClickedPositions;
+typedef struct {
+  int new_position;
+  ClickedPositions *clicked_positions;
+  GameConfig *config;
+  GtkWidget *button;
+} ButtonClickData;
 #endif // DATA_H

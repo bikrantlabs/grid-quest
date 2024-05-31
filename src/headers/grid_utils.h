@@ -11,7 +11,7 @@ Direction choose_random_direction();
 
 int *change_position_to_coordinate(int number, int cols);
 int change_coordinate_to_position(int *coords, int cols);
-void place_word_in_table(SelectedWord word, GameConfig config,
+void place_word_in_table(SelectedWord word, int *coords, GameConfig config,
                          GameState game_state);
 void fill_grid_with_characters(GameConfig config);
 void initialize_grid(GameConfig *config);

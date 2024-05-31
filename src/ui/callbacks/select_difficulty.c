@@ -15,22 +15,6 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
   config.words = malloc(5 * sizeof(char *));
   if (strcmp(label, "Easy") == 0) {
     config.difficulty = EASY;
-    RandomSelectedWords *random_word = get_words(config.difficulty);
-    config.words = random_word->words;
-    config.total_words = random_word->total_words;
-
-    int longest_word = longest_word_in_array(config.words, config.total_words);
-
-    config.table_length = longest_word + 2;
-
-    // Generate a table
-    initialize_grid(&config);
-    printf("CHAR: %c", config.table[0][0]);
-    // Allocate memory for gamestate
-    config.game_state = malloc(config.total_words * sizeof(GameState));
-    initialize_game(config);
-    generate_button_grids(&config, params->button_grid);
-    generate_words_hints_grid(&config, params->word_hints_grid);
   } else if (strcmp(label, "Medium") == 0) {
     config.difficulty = MEDIUM;
   } else if (strcmp(label, "Hard") == 0) {
@@ -38,6 +22,21 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
   } else {
     config.difficulty = MEDIUM;
   }
+  RandomSelectedWords *random_word = get_words(config.difficulty);
+  config.words = random_word->words;
+  config.total_words = random_word->total_words;
+
+  int longest_word = longest_word_in_array(config.words, config.total_words);
+
+  config.table_length = longest_word + 2;
+
+  // Generate a table
+  initialize_grid(&config);
+  // Allocate memory for gamestate
+  config.game_state = malloc(config.total_words * sizeof(GameState));
+  initialize_game(config);
+  generate_button_grids(&config, params->button_grid);
+  generate_words_hints_grid(&config, params->word_hints_grid);
   // Initialize Game Here
 
   // TODO: Fire function to read words from respective files.
