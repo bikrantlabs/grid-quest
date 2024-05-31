@@ -2,7 +2,7 @@
 #define TYPEDEFS_H
 
 typedef enum Direction { HORIZONTAL, VERTICAL } Direction;
-
+typedef enum Difficulty { EASY, MEDIUM, HARD } Difficulty;
 typedef struct {
   // int id;
   int *position;
@@ -11,9 +11,9 @@ typedef struct {
 } TableData;
 
 typedef struct {
-  int length;
   int total_words;
   int table_length;
+  Difficulty difficulty;
   char **words;
   char **table;
 } Table;

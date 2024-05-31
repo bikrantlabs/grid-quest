@@ -1,6 +1,7 @@
 #include "headers/ui_logic.h"
 #include "headers/typedefs.h"
 #include "pages.h"
+#include "start_screen.h"
 
 static GtkWidget ***buttons;
 void on_start_game_button_clicked(GtkButton *button, gpointer user_data) {
@@ -33,8 +34,8 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
 
   // Start Game Button
   GtkWidget *start_game_button = gtk_button_new_with_label("Start Game");
-
-  gtk_box_append(GTK_BOX(home_page), start_game_button);
+  GtkWidget *start_screen_grid = start_screen(table);
+  gtk_box_append(GTK_BOX(home_page), start_screen_grid);
 
   // Add home page to stack
 
@@ -60,14 +61,14 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   // Apply CSS
   apply_css("../src/styles.css");
   // Allocate memory for buttons
-  buttons = malloc(table->length * sizeof(GtkWidget **));
-  for (int i = 0; i < table->length; ++i) {
-    buttons[i] = malloc(table->length * sizeof(GtkWidget *));
+  buttons = malloc(table->table_length * sizeof(GtkWidget **));
+  for (int i = 0; i < table->table_length; ++i) {
+    buttons[i] = malloc(table->table_length * sizeof(GtkWidget *));
   }
 
   // Create buttons and add to grid
-  for (int i = 0; i < table->length; ++i) {
-    for (int j = 0; j < table->length; ++j) {
+  for (int i = 0; i < table->table_length; ++i) {
+    for (int j = 0; j < table->table_length; ++j) {
       char label[2];
       label[0] = table->table[i][j];
       label[1] = '\0';

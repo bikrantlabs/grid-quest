@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
   // The length of array is equal to the number of words in array.
   TableData game_data[5];
-
+  Difficulty difficulty;
   int total_words = sizeof(words) / sizeof(words[0]);
 
   int longest_word_length = longest_word_in_array(words, total_words);
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     grid[i] = malloc(table_length * sizeof(char));
   }
 
-  Table table = {table_length, total_words, table_length, words, grid};
+  Table table = {total_words, table_length, difficulty, words, grid};
   srand(time(NULL));
   initialize_game(table_length, words, table, game_data);
   // printf("GAME DATA:\n");
