@@ -5,8 +5,7 @@
 #include <gtk/gtk.h>
 #include <stdbool.h>
 
-void initialize_game(int grid_length, char **words, Table table,
-                     TableData *table_data);
+void initialize_game(GameConfig config);
 
 // Check if the cell is already filled
 

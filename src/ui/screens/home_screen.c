@@ -2,10 +2,10 @@
  * Choose Difficulty in Start Screen.
  */
 
-#include "start_screen.h"
 #include "callbacks.h"
+#include "pages.h"
 #include "typedefs.h"
-GtkWidget *start_screen(SelectDifficultyParams *select_difficulty_params) {
+GtkWidget *home_screen(SelectDifficultyParams *select_difficulty_params) {
   GtkWidget *easy_button;
   GtkWidget *medium_button;
   GtkWidget *hard_button;

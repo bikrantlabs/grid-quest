@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/src/headers)
 file(GLOB_RECURSE SRCS src/*.c)
-
+set(CMAKE_BUILD_TYPE Debug)
 # Find GTK4 package using pkg-config
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)

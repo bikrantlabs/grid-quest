@@ -14,3 +14,14 @@ button.characters {
     font-size: 48px;
     margin-bottom:20px;
 }
+.word_hints_grid{
+    margin-left:20px;
+}
+.word_hint_label{
+    margin-bottom:20px;
+    font-size:32px;
+}
+.word_hint {
+    margin-bottom:10px;
+    font-size:24px;
+}

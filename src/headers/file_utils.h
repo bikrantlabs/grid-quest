@@ -1,6 +1,8 @@
-#ifndef FILE_UTILS_H
-#define FILE_UTILS_H
+// #ifndef FILE_UTILS_H
+// #define FILE_UTILS_H
 
-#include <gtk/gtk.h>
+// #include "typedefs.h"
+// #include <gtk/gtk.h>
 
-#endif
+// LoadWordsReturn *load_words(const char *filepath);
+// #endif

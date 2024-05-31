@@ -3,20 +3,23 @@
 #include <gtk/gtk.h>
 typedef enum Direction { HORIZONTAL, VERTICAL } Direction;
 typedef enum Difficulty { EASY, MEDIUM, HARD } Difficulty;
+
+// Struct for savin game state like total words placed, their positions, etc
 typedef struct {
-  // int id;
-  int *position;
+  int *coords;
   char *word;
   Direction direction;
-} TableData;
-
+} GameState;
+// The config struct needed to initialize the game
 typedef struct {
   int total_words;
   int table_length;
-  Difficulty difficulty;
+  char *filepath;
   char **words;
   char **table;
-} Table;
+  Difficulty difficulty;
+  GameState *game_state;
+} GameConfig;
 
 typedef struct {
   char *word;
@@ -29,7 +32,14 @@ typedef struct {
 } CreatePageParams;
 
 typedef struct {
-  Table *table;
+  GameConfig *config;
   GtkWidget *stack;
+  GtkWidget *button_grid;
+  GtkWidget *word_hints_grid;
 } SelectDifficultyParams;
+
+typedef struct {
+  char **words;
+  int total_words;
+} RandomSelectedWords;
 #endif // DATA_H

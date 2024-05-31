@@ -5,6 +5,6 @@
 #include <gtk/gtk.h>
 #include <stdbool.h>
 
-GtkWidget *start_screen(SelectDifficultyParams *select_difficulty_params);
+GtkWidget *home_screen(SelectDifficultyParams *select_difficulty_params);
 
 #endif // GAME_LOGIC_H

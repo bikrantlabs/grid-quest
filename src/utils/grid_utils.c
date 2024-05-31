@@ -4,36 +4,71 @@
 #include "grid_utils.h"
 #include "headers/word_utils.h"
 #include "stdlib.h"
+#include "typedefs.h"
 #include <ctype.h>
-bool validate_position(int *coords, int grid_length, SelectedWord word,
-                       Direction direction, Table table) {
+void initialize_grid(GameConfig *config) {
+  char **grid = malloc(config->table_length * sizeof(char *));
+  if (grid == NULL) {
+    // Handle memory allocation failure
+    perror("Failed to allocate memory for grid rows");
+  }
 
+  for (int i = 0; i < config->table_length; ++i) {
+    grid[i] = malloc(config->table_length * sizeof(char));
+    if (grid[i] == NULL) {
+      // Handle memory allocation failure
+      perror("Failed to allocate memory for grid columns");
+      // Free previously allocated memory
+      for (int j = 0; j < i; ++j) {
+        free(grid[j]);
+      }
+      free(grid);
+    }
+
+    // Initialize each element to '\0'
+    for (int j = 0; j < config->table_length; ++j) {
+      grid[i][j] = '\0';
+    }
+  }
+
+  config->table = grid;
+}
+bool validate_position(int *coords, int grid_length, SelectedWord word,
+                       Direction direction, GameConfig config) {
+  // printf("Validating position for :%s\n", word.word);
+  int c = coords[0];
+  int c1 = coords[1];
   if (direction == VERTICAL) {
 
     bool available_spaces =
         word.word_length <= grid_length - coords[0] ? true : false;
-
+    // printf("V: Word = %s, Length = %d", word.word, word.word_length);
     if (available_spaces) {
       // Check there are no other letters already filled there
       int pos = 0;
       for (int i = coords[0]; i < word.word_length + coords[0]; i++) {
-        if (table.table[i][coords[1]] != '\0') {
+        // printf("Char: %c", config.table[i][coords[1]]);
+        if (config.table[i][coords[1]] != '\0') {
+          // printf("V: Returning false from null checker.....\n");
           return false;
         }
         pos++;
       }
       return true;
     } else {
+      // printf("V: Returning false SNA.....\n");
       return false;
     }
   } else {
     bool available_spaces =
         word.word_length <= grid_length - coords[1] ? true : false;
+    // printf("H: Word = %s, Length = %d", word.word, word.word_length);
     if (available_spaces) {
       int pos = 0;
 
       for (int i = coords[1]; i < word.word_length + coords[1]; i++) {
-        if (table.table[coords[0]][i] != '\0') {
+        if (config.table[coords[0]][i] != '\0') {
+          // printf("H: Returning false from null checker.....\n");
           return false;
         }
         pos++;
@@ -41,7 +76,7 @@ bool validate_position(int *coords, int grid_length, SelectedWord word,
 
       return true;
     } else {
-
+      // printf("H: Returning false from SNA.....\n");
       return false;
     }
   }
@@ -60,27 +95,27 @@ int choose_random_position(int grid_length) {
   return position;
 }
 
-void place_word_in_table(SelectedWord word, const Table table,
-                         TableData table_data) {
-  int *coords = table_data.position;
+void place_word_in_table(SelectedWord word, const GameConfig config,
+                         GameState game_state) {
+  int *coords = game_state.coords;
   for (int i = 0; i <= word.word_length; i++) {
-    if (table_data.word[i] == '\0') {
+    if (game_state.word[i] == '\0') {
       continue;
     }
-    if (table_data.direction == HORIZONTAL) {
-      table.table[coords[0]][coords[1] + i] = toupper(table_data.word[i]);
+    if (game_state.direction == HORIZONTAL) {
+      config.table[coords[0]][coords[1] + i] = toupper(game_state.word[i]);
     } else {
-      table.table[coords[0] + i][coords[1]] = toupper(table_data.word[i]);
+      config.table[coords[0] + i][coords[1]] = toupper(game_state.word[i]);
     }
   }
 }
 
-void fill_grid_with_characters(Table table) {
-  for (int i = 0; i < table.table_length; i++) {
-    for (int j = 0; j < table.table_length; j++) {
-      if (table.table[i][j] == '\0') {
-        table.table[i][j] =
-            generate_random_character(table.words, table.total_words);
+void fill_grid_with_characters(GameConfig config) {
+  for (int i = 0; i < config.table_length; i++) {
+    for (int j = 0; j < config.table_length; j++) {
+      if (config.table[i][j] == '\0') {
+        config.table[i][j] =
+            generate_random_character(config.words, config.total_words);
       } else {
       }
     }
