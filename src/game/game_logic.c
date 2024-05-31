@@ -31,8 +31,10 @@ void initialize_game(GameConfig config) {
 
         game_state.direction = direction;
         game_state.word = selected_word.word;
+        game_state.word_length = selected_word.word_length;
         place_word_in_table(selected_word, coords, config, game_state);
         config.game_state[i] = game_state;
+        printf("GAMESTATEWORD-LENGTH: %s\n", config.game_state[i].word);
       }
     }
   }

@@ -32,7 +32,7 @@ void generate_button_grids(GameConfig *config, GtkWidget *grid) {
       ButtonClickData *button_data = malloc(sizeof(ButtonClickData));
       button_data->new_position = position;
       button_data->button = buttons[i][j];
-      button_data->config = config;
+      button_data->config = *config;
       button_data->clicked_positions = clicked_positions;
       gtk_widget_add_css_class(buttons[i][j], "characters");
       g_signal_connect(buttons[i][j], "clicked", G_CALLBACK(on_button_clicked),

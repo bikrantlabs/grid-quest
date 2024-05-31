@@ -103,11 +103,22 @@ void place_word_in_table(SelectedWord word, int *coords,
     }
     if (game_state.direction == HORIZONTAL) {
       config.table[coords[0]][coords[1] + i] = toupper(game_state.word[i]);
-      game_state.coords[i] =
-          change_coordinate_to_position(coords, config.table_length);
+      int myCoords[2];
+      myCoords[0] = coords[0];
+      myCoords[1] = coords[1] + i;
+      int position =
+          change_coordinate_to_position(myCoords, config.table_length);
+      printf("Placing %s in %d\n", word.word, position);
+      game_state.coords[i] = position;
     } else {
-
       config.table[coords[0] + i][coords[1]] = toupper(game_state.word[i]);
+      int myCoords[2];
+      myCoords[0] = coords[0] + i;
+      myCoords[1] = coords[1];
+      int position =
+          change_coordinate_to_position(myCoords, config.table_length);
+      printf("Placing %s in %d\n", word.word, position);
+      game_state.coords[i] = position;
     }
   }
 }

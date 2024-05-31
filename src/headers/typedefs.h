@@ -8,6 +8,7 @@ typedef enum Difficulty { EASY, MEDIUM, HARD } Difficulty;
 typedef struct {
   int *coords;
   char *word;
+  int word_length;
   Direction direction;
 } GameState;
 // The config struct needed to initialize the game
@@ -51,7 +52,7 @@ typedef struct {
 typedef struct {
   int new_position;
   ClickedPositions *clicked_positions;
-  GameConfig *config;
+  GameConfig config;
   GtkWidget *button;
 } ButtonClickData;
 #endif // DATA_H

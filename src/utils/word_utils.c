@@ -69,3 +69,23 @@ int is_number_in_array(int arr[], int size, int number) {
   }
   return 0;
 }
+/**
+ Checks if array two contains all elements of array one, and returns true or
+ false
+*/
+bool is_subset(int *array_one, int size_one, int *array_two, int size_two) {
+  printf("Is Subset Running: \n");
+  for (int i = 0; i < size_one; i++) {
+    bool found = false;
+    for (int j = 0; j < size_two; j++) {
+      if (array_one[i] == array_two[j]) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      return false;
+    }
+  }
+  return true;
+}
