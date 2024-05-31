@@ -14,6 +14,7 @@ typedef struct {
   int length;
   int total_words;
   int table_length;
+  char **words;
   char **table;
 } Table;
 

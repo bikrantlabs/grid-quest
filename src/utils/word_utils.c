@@ -3,6 +3,7 @@
  */
 
 #include "word_utils.h"
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -17,12 +18,20 @@ int longest_word_in_array(char **word, int total_words) {
   return max_length;
 }
 
-char generate_random_character() {
-  int random_index = rand() % 26;
+/**
+ * Function to generate random characters from words array.
+ */
+char generate_random_character(char **words, int total_words) {
 
-  // Add 'A' (ASCII value of 65) to get the character
-  char random_char = 'A' + random_index;
-  return random_char;
+  // Choose a random string from the array
+  int random_index = rand() % total_words;
+  char *selected_string = words[random_index];
+
+  // Choose a random character from the selected string
+  int string_length = strlen(selected_string);
+  int random_char_index = rand() % string_length;
+
+  return toupper(selected_string[random_char_index]);
 }
 
 SelectedWord choose_random_word(char **word, int total_words) {

@@ -79,7 +79,8 @@ void fill_grid_with_characters(Table table) {
   for (int i = 0; i < table.table_length; i++) {
     for (int j = 0; j < table.table_length; j++) {
       if (table.table[i][j] == '\0') {
-        table.table[i][j] = generate_random_character();
+        table.table[i][j] =
+            generate_random_character(table.words, table.total_words);
       } else {
       }
     }

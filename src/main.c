@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     grid[i] = malloc(table_length * sizeof(char));
   }
 
-  Table table = {table_length, total_words, table_length, grid};
+  Table table = {table_length, total_words, table_length, words, grid};
   srand(time(NULL));
   initialize_game(table_length, words, table, game_data);
   // printf("GAME DATA:\n");
