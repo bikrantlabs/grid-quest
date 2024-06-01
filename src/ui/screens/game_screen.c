@@ -5,7 +5,8 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
-void generate_button_grids(GameConfig *config, GtkWidget *grid) {
+void generate_button_grids(GameConfig *config, UiConfig *uiconfig,
+                           GtkWidget *grid) {
   static GtkWidget ***buttons;
 
   buttons = malloc(config->table_length * sizeof(GtkWidget **));
@@ -32,8 +33,9 @@ void generate_button_grids(GameConfig *config, GtkWidget *grid) {
       ButtonClickData *button_data = malloc(sizeof(ButtonClickData));
       button_data->new_position = position;
       button_data->button = buttons[i][j];
-      button_data->config = *config;
+      button_data->config = config;
       button_data->clicked_positions = clicked_positions;
+      button_data->uiconfig = uiconfig;
       gtk_widget_add_css_class(buttons[i][j], "characters");
       g_signal_connect(buttons[i][j], "clicked", G_CALLBACK(on_button_clicked),
                        button_data);
@@ -41,22 +43,29 @@ void generate_button_grids(GameConfig *config, GtkWidget *grid) {
     }
   }
 }
-void generate_words_hints_grid(GameConfig *config, GtkWidget *grid) {
+void generate_words_hints_grid(GameConfig *config, UiConfig *uiconfig,
+                               GtkWidget *grid) {
   GtkWidget **labels = malloc(config->total_words * sizeof(GtkWidget *));
   if (labels == NULL) {
     // Handle memory allocation failure
     perror("Failed to allocate memory for labels");
     exit(EXIT_FAILURE);
   }
+  char attempts[300];
+  printf("Attempts are : %d\n", config->attempts);
+  snprintf(attempts, sizeof(attempts), "%d", config->attempts);
   GtkWidget *label = gtk_label_new("WORDS:");
+  GtkWidget *attempts_label = gtk_label_new(attempts);
+  uiconfig->attempts_label = attempts_label;
   gtk_widget_add_css_class(label, "word_hint_label");
 
-  gtk_grid_attach(GTK_GRID(grid), label, 0, 0, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), attempts_label, 0, 0, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1);
   // Create labels and add to grid
   for (int i = 0; i < config->total_words; ++i) {
 
     labels[i] = gtk_label_new(uppercase(config->words[i]));
     gtk_widget_add_css_class(labels[i], "word_hint");
-    gtk_grid_attach(GTK_GRID(grid), labels[i], 0, i + 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), labels[i], 0, i + 2, 1, 1);
   }
 }

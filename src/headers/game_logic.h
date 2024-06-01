@@ -5,7 +5,7 @@
 #include <gtk/gtk.h>
 #include <stdbool.h>
 
-void initialize_game(GameConfig config);
+void initialize_game(GameConfig *config);
 
 // Check if the cell is already filled
 

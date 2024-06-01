@@ -34,7 +34,7 @@ void initialize_grid(GameConfig *config) {
   config->table = grid;
 }
 bool validate_position(int *coords, int grid_length, SelectedWord word,
-                       Direction direction, GameConfig config) {
+                       Direction direction, GameConfig *config) {
   // printf("Validating position for :%s\n", word.word);
   int c = coords[0];
   int c1 = coords[1];
@@ -48,7 +48,7 @@ bool validate_position(int *coords, int grid_length, SelectedWord word,
       int pos = 0;
       for (int i = coords[0]; i < word.word_length + coords[0]; i++) {
         // printf("Char: %c", config.table[i][coords[1]]);
-        if (config.table[i][coords[1]] != '\0') {
+        if (config->table[i][coords[1]] != '\0') {
           // printf("V: Returning false from null checker.....\n");
           return false;
         }
@@ -67,7 +67,7 @@ bool validate_position(int *coords, int grid_length, SelectedWord word,
       int pos = 0;
 
       for (int i = coords[1]; i < word.word_length + coords[1]; i++) {
-        if (config.table[coords[0]][i] != '\0') {
+        if (config->table[coords[0]][i] != '\0') {
           // printf("H: Returning false from null checker.....\n");
           return false;
         }
@@ -95,40 +95,46 @@ int choose_random_position(int grid_length) {
   return position;
 }
 
-void place_word_in_table(SelectedWord word, int *coords,
-                         const GameConfig config, GameState game_state) {
+void place_word_in_table(SelectedWord word, int *coords, GameConfig *config,
+                         GameState game_state) {
   for (int i = 0; i <= word.word_length; i++) {
     if (game_state.word[i] == '\0') {
       continue;
     }
     if (game_state.direction == HORIZONTAL) {
-      config.table[coords[0]][coords[1] + i] = toupper(game_state.word[i]);
+      config->table[coords[0]][coords[1] + i] = toupper(game_state.word[i]);
       int myCoords[2];
       myCoords[0] = coords[0];
       myCoords[1] = coords[1] + i;
       int position =
-          change_coordinate_to_position(myCoords, config.table_length);
-      printf("Placing %s in %d\n", word.word, position);
+          change_coordinate_to_position(myCoords, config->table_length);
       game_state.coords[i] = position;
+      // Whenever we place a letter in grid, increase no. of attempts
+      printf("Increasing the attemp: Prev attempts: %d\n", config->attempts);
+      config->attempts++;
+      printf("New attempts: %d\n", config->attempts);
     } else {
-      config.table[coords[0] + i][coords[1]] = toupper(game_state.word[i]);
+      config->table[coords[0] + i][coords[1]] = toupper(game_state.word[i]);
       int myCoords[2];
       myCoords[0] = coords[0] + i;
       myCoords[1] = coords[1];
       int position =
-          change_coordinate_to_position(myCoords, config.table_length);
-      printf("Placing %s in %d\n", word.word, position);
+          change_coordinate_to_position(myCoords, config->table_length);
       game_state.coords[i] = position;
+      // Whenever we place a letter in grid, increase no. of attempts
+      printf("Increasing the attemp: Prev attempts: %d\n", config->attempts);
+      config->attempts++;
+      printf("New attempts: %d\n", config->attempts);
     }
   }
 }
 
-void fill_grid_with_characters(GameConfig config) {
-  for (int i = 0; i < config.table_length; i++) {
-    for (int j = 0; j < config.table_length; j++) {
-      if (config.table[i][j] == '\0') {
-        config.table[i][j] =
-            generate_random_character(config.words, config.total_words);
+void fill_grid_with_characters(GameConfig *config) {
+  for (int i = 0; i < config->table_length; i++) {
+    for (int j = 0; j < config->table_length; j++) {
+      if (config->table[i][j] == '\0') {
+        config->table[i][j] =
+            generate_random_character(config->words, config->total_words);
       } else {
       }
     }

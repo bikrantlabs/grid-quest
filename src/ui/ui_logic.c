@@ -16,7 +16,7 @@ static void on_button_clicked(GtkWidget *widget, gpointer data) {
 }
 
 void setup_ui(GtkApplication *app, gpointer user_data) {
-  GameConfig *config = (GameConfig *)user_data;
+  AppConfig *app_config = (AppConfig *)user_data;
   GtkWidget *window = gtk_application_window_new(app);
   gtk_window_set_title(GTK_WINDOW(window), "Word Puzzle Game");
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
@@ -24,16 +24,20 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
       malloc(sizeof(SelectDifficultyParams));
   // Create Stack
   start_screen_params->stack = gtk_stack_new();
-  start_screen_params->config = config;
-
+  start_screen_params->config = app_config->game_config;
+  start_screen_params->uiconfig = app_config->uiconfig;
+  app_config->uiconfig->stack = start_screen_params->stack;
   gtk_stack_set_transition_type(GTK_STACK(start_screen_params->stack),
                                 GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
   gtk_window_set_child(GTK_WINDOW(window), start_screen_params->stack);
 
   // Home Page
   CreatePageParams home_page_params = {"home_page", "Home Page"};
+  CreatePageParams game_over_page_params = {"game_over_page", "Game Over Page"};
   GtkWidget *home_page =
       create_page(start_screen_params->stack, home_page_params);
+  GtkWidget *game_over_page =
+      create_page(start_screen_params->stack, game_over_page_params);
   // Create the game page
   CreatePageParams game_page_garams = {"game_page", "Game Page"};
   GtkWidget *game_page =
@@ -67,7 +71,9 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   // Start Game Button
   GtkWidget *start_game_button = gtk_button_new_with_label("Start Game");
   GtkWidget *start_screen_grid = home_screen(start_screen_params);
+  GtkWidget *game_over_grid = game_over_screen(start_screen_params);
   gtk_box_append(GTK_BOX(home_page), start_screen_grid);
+  gtk_box_append(GTK_BOX(game_over_page), game_over_grid);
 
   // Add home page to start_screen_params->stack
 

@@ -18,6 +18,7 @@ typedef struct {
   char *filepath;
   char **words;
   char **table;
+  int attempts;
   Difficulty difficulty;
   GameState *game_state;
 } GameConfig;
@@ -33,13 +34,6 @@ typedef struct {
 } CreatePageParams;
 
 typedef struct {
-  GameConfig *config;
-  GtkWidget *stack;
-  GtkWidget *button_grid;
-  GtkWidget *word_hints_grid;
-} SelectDifficultyParams;
-
-typedef struct {
   char **words;
   int total_words;
 } RandomSelectedWords;
@@ -49,10 +43,31 @@ typedef struct {
   int *positions;
   int max_size;
 } ClickedPositions;
+
+typedef struct {
+  GtkWidget *attempts_label;
+  GtkWidget *stack;
+} UiConfig;
+
 typedef struct {
   int new_position;
   ClickedPositions *clicked_positions;
-  GameConfig config;
+  GameConfig *config;
+  UiConfig *uiconfig;
   GtkWidget *button;
+  GtkWidget *stack;
 } ButtonClickData;
+
+typedef struct {
+  GameConfig *config;
+  UiConfig *uiconfig;
+  GtkWidget *stack;
+  GtkWidget *button_grid;
+  GtkWidget *word_hints_grid;
+} SelectDifficultyParams;
+
+typedef struct {
+  GameConfig *game_config;
+  UiConfig *uiconfig;
+} AppConfig;
 #endif // DATA_H
