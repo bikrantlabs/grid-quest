@@ -5,16 +5,13 @@
 #include "callbacks.h"
 #include "pages.h"
 #include "typedefs.h"
-GtkWidget *game_over_screen(SelectDifficultyParams *select_difficulty_params) {
-  GtkWidget *easy_button;
-  GtkWidget *medium_button;
-  GtkWidget *hard_button;
+GtkWidget *game_over_screen(AppConfig *app_config) {
   GtkWidget *exit_game;
   GtkWidget *start_again;
 
-  start_again = gtk_button_new_with_label("Easy");
+  start_again = gtk_button_new_with_label("Play again");
   g_signal_connect(start_again, "clicked", G_CALLBACK(start_game_again),
-                   select_difficulty_params);
+                   app_config);
 
   GtkWidget *grid = gtk_grid_new();
   GtkWidget *label = gtk_label_new("Game Over");

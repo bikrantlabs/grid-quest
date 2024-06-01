@@ -1,24 +1,23 @@
 /**
  * Choose Difficulty in Start Screen.
  */
-
 #include "callbacks.h"
 #include "pages.h"
 #include "typedefs.h"
-GtkWidget *home_screen(SelectDifficultyParams *select_difficulty_params) {
+GtkWidget *home_screen(AppConfig *app_config) {
   GtkWidget *easy_button;
   GtkWidget *medium_button;
   GtkWidget *hard_button;
 
   easy_button = gtk_button_new_with_label("Easy");
   g_signal_connect(easy_button, "clicked", G_CALLBACK(select_difficulty),
-                   select_difficulty_params);
+                   app_config);
   medium_button = gtk_button_new_with_label("Medium");
   g_signal_connect(medium_button, "clicked", G_CALLBACK(select_difficulty),
-                   select_difficulty_params);
+                   app_config);
   hard_button = gtk_button_new_with_label("Hard");
   g_signal_connect(hard_button, "clicked", G_CALLBACK(select_difficulty),
-                   select_difficulty_params);
+                   app_config);
 
   GtkWidget *grid = gtk_grid_new();
   GtkWidget *label = gtk_label_new("Select difficulty");

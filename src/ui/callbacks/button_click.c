@@ -32,10 +32,11 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
                                               // and detect valid selection
   // If attempts is 0, show Game Over screen.
   if (button_data->config->attempts <= 0) {
-    // Navigate to Game over screen and reset all data
+
     gtk_stack_set_visible_child_name(GTK_STACK(button_data->uiconfig->stack),
                                      "game_over_page");
-    free(button_data->config);
+    free(button_data->clicked_positions->positions);
+    free(button_data->clicked_positions);
   }
   if (gtk_widget_has_css_class(widget, "selected")) {
     gtk_widget_remove_css_class(widget, "selected");

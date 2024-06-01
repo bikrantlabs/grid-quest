@@ -14,5 +14,5 @@ int change_coordinate_to_position(int *coords, int cols);
 void place_word_in_table(SelectedWord word, int *coords, GameConfig *config,
                          GameState game_state);
 void fill_grid_with_characters(GameConfig *config);
-void initialize_grid(GameConfig *config);
+void initialize_grid(AppConfig *app_config);
 #endif // GRID_UTILS_H

@@ -6,45 +6,50 @@
 #include "typedefs.h"
 #include "word_utils.h"
 #include <gtk/gtk.h>
+#include <stdlib.h>
 #include <string.h>
 void select_difficulty(GtkButton *button, gpointer user_data) {
-  SelectDifficultyParams *params = (SelectDifficultyParams *)user_data;
+  AppConfig *params = (AppConfig *)user_data;
   const gchar *label = gtk_button_get_label(button);
   // Allocate all memory only after selecting difficulty
+  params->game_config = malloc(sizeof(GameConfig));
 
-  GameConfig *config = params->config;
-  config->words = malloc(5 * sizeof(char *));
-  config->attempts = 0;
+  params->game_config->words = malloc(5 * sizeof(char *));
+  params->game_config->attempts = 0;
   if (strcmp(label, "Easy") == 0) {
-    config->attempts += 6;
-    config->difficulty = EASY;
+    params->game_config->attempts += 0;
+    params->game_config->difficulty = EASY;
   } else if (strcmp(label, "Medium") == 0) {
-    config->attempts += 4;
-    config->difficulty = MEDIUM;
+    params->game_config->attempts += 4;
+    params->game_config->difficulty = MEDIUM;
   } else if (strcmp(label, "Hard") == 0) {
-    config->attempts += 2;
-    config->difficulty = HARD;
+    params->game_config->attempts += 2;
+    params->game_config->difficulty = HARD;
   } else {
-    config->attempts += 4;
-    config->difficulty = MEDIUM;
+    params->game_config->attempts += 4;
+    params->game_config->difficulty = MEDIUM;
   }
-  RandomSelectedWords *random_word = get_words(config->difficulty);
-  config->words = random_word->words;
-  config->total_words = random_word->total_words;
+  RandomSelectedWords *random_word = get_words(params->game_config->difficulty);
+  params->game_config->words = random_word->words;
+  params->game_config->total_words = random_word->total_words;
 
-  int longest_word = longest_word_in_array(config->words, config->total_words);
+  int longest_word = longest_word_in_array(params->game_config->words,
+                                           params->game_config->total_words);
 
-  config->table_length = longest_word + 2;
+  params->game_config->table_length = longest_word + 2;
 
+  params->game_config->game_state =
+      malloc(params->game_config->total_words * sizeof(GameState));
   // Generate a table
-  initialize_grid(config);
+  initialize_grid(params);
   // Allocate memory for gamestate
-  config->game_state = malloc(config->total_words * sizeof(GameState));
-  initialize_game(config);
-  generate_button_grids(config, params->uiconfig, params->button_grid);
-  generate_words_hints_grid(config, params->uiconfig, params->word_hints_grid);
+  initialize_game(params->game_config);
+  // TODO: Remove previous UI and generate new UI and add to stacks:
+  generate_button_grids(params, params->uiconfig->button_grid);
+  generate_words_hints_grid(params);
   // Initialize Game Here
 
   // TODO: Fire function to read words from respective files.
-  gtk_stack_set_visible_child_name(GTK_STACK(params->stack), "game_page");
+  gtk_stack_set_visible_child_name(GTK_STACK(params->uiconfig->stack),
+                                   "game_page");
 }

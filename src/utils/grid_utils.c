@@ -6,32 +6,32 @@
 #include "stdlib.h"
 #include "typedefs.h"
 #include <ctype.h>
-void initialize_grid(GameConfig *config) {
-  char **grid = malloc(config->table_length * sizeof(char *));
-  if (grid == NULL) {
+void initialize_grid(AppConfig *app_config) {
+  app_config->game_config->table =
+      malloc(app_config->game_config->table_length * sizeof(char *));
+  if (app_config->game_config->table == NULL) {
     // Handle memory allocation failure
     perror("Failed to allocate memory for grid rows");
   }
 
-  for (int i = 0; i < config->table_length; ++i) {
-    grid[i] = malloc(config->table_length * sizeof(char));
-    if (grid[i] == NULL) {
+  for (int i = 0; i < app_config->game_config->table_length; ++i) {
+    app_config->game_config->table[i] =
+        malloc(app_config->game_config->table_length * sizeof(char));
+    if (app_config->game_config->table[i] == NULL) {
       // Handle memory allocation failure
       perror("Failed to allocate memory for grid columns");
       // Free previously allocated memory
       for (int j = 0; j < i; ++j) {
-        free(grid[j]);
+        free(app_config->game_config->table[j]);
       }
-      free(grid);
+      free(app_config->game_config->table);
     }
 
     // Initialize each element to '\0'
-    for (int j = 0; j < config->table_length; ++j) {
-      grid[i][j] = '\0';
+    for (int j = 0; j < app_config->game_config->table_length; ++j) {
+      app_config->game_config->table[i][j] = '\0';
     }
   }
-
-  config->table = grid;
 }
 bool validate_position(int *coords, int grid_length, SelectedWord word,
                        Direction direction, GameConfig *config) {
