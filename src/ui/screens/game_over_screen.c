@@ -3,7 +3,7 @@
  */
 
 #include "callbacks.h"
-#include "pages.h"
+#include "screens.h"
 #include "typedefs.h"
 GtkWidget *game_over_screen(AppConfig *app_config) {
   GtkWidget *exit_game;
@@ -12,7 +12,6 @@ GtkWidget *game_over_screen(AppConfig *app_config) {
   start_again = gtk_button_new_with_label("Play again");
   g_signal_connect(start_again, "clicked", G_CALLBACK(start_game_again),
                    app_config);
-
   GtkWidget *grid = gtk_grid_new();
   GtkWidget *label = gtk_label_new("Game Over");
   gtk_widget_add_css_class(label, "select-difficulty-label");

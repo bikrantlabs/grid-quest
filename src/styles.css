@@ -32,6 +32,11 @@ button.characters {
     font-size: 32px;
 }
 
+.attempts_label {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
 .label_strike {
     color: rgb(204, 204, 204);
     text-decoration: line-through;

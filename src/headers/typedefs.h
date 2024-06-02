@@ -54,15 +54,9 @@ typedef struct {
   GtkWidget *game_page;
   GtkWidget ***buttons;
   GtkWidget **word_hint_labels;
+  GtkWidget *game_complete_page;
+  GtkWidget *game_over_page;
 } UiConfig;
-
-// typedef struct {
-//   GameConfig *config;
-//   UiConfig *uiconfig;
-//   GtkWidget *stack;
-//   GtkWidget *button_grid;
-//   GtkWidget *word_hints_grid;
-// } SelectDifficultyParams;
 
 typedef struct {
   GameConfig *game_config;

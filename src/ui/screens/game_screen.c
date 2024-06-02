@@ -54,9 +54,43 @@ void generate_words_hints_grid(AppConfig *app_config) {
     exit(EXIT_FAILURE);
   }
   char attempts[300];
+  GtkWidget *attempt_word = gtk_label_new("Attempts left: ");
   snprintf(attempts, sizeof(attempts), "%d", app_config->game_config->attempts);
+
   GtkWidget *label = gtk_label_new("WORDS:");
+  GtkWidget *attempt_label_wrapper = gtk_grid_new();
+  gtk_grid_attach(GTK_GRID(attempt_label_wrapper), attempt_word, 0, 0, 1, 1);
+
   app_config->uiconfig->attempts_label = gtk_label_new(attempts);
+
+  gtk_grid_attach(GTK_GRID(attempt_label_wrapper),
+                  app_config->uiconfig->attempts_label, 1, 0, 1, 1);
+  gtk_widget_add_css_class(label, "word_hint_label");
+  gtk_widget_add_css_class(attempt_label_wrapper, "attempts_label");
+
+  gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid),
+                  attempt_label_wrapper, 0, 0, 1, 1);
+
+  gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid), label, 0, 1,
+                  1, 1);
+  // Create labels and add to grid
+  for (int i = 0; i < app_config->game_config->total_words; ++i) {
+
+    app_config->uiconfig->word_hint_labels[i] =
+        gtk_label_new(uppercase(app_config->game_config->words[i]));
+    gtk_widget_add_css_class(app_config->uiconfig->word_hint_labels[i],
+                             "word_hint");
+    gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid),
+                    app_config->uiconfig->word_hint_labels[i], 0, i + 2, 1, 1);
+  }
+}
+
+void generate_game_score_grid(AppConfig *app_config) {
+
+  char attempts[300];
+  snprintf(attempts, sizeof(attempts), "%d", app_config->game_config->attempts);
+  GtkWidget *label = gtk_label_new("You Won!");
+  GtkWidget *label2 = gtk_label_new("Your Score");
   gtk_widget_add_css_class(label, "word_hint_label");
 
   gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid),

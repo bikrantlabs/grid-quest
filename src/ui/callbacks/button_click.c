@@ -65,14 +65,7 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
   check_user_selection(button_data->clicked_positions,
                        button_data->app_config->game_config,
                        button_data->app_config->uiconfig);
-  if (check_game_complete(button_data->app_config->game_config)) {
-    printf("Game Complete!");
-    gtk_stack_set_visible_child_name(
-        GTK_STACK(button_data->app_config->uiconfig->stack), "game_over_page");
-    free(button_data->clicked_positions->positions);
-    free(button_data->clicked_positions);
-    // Show Game Complete Scoring Screen.
-  };
+
   update_attempts(button_data->app_config->game_config->attempts,
                   button_data->app_config->uiconfig->attempts_label);
   // If attempts is 0, show Game Over screen.
@@ -83,6 +76,13 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
     free(button_data->clicked_positions->positions);
     free(button_data->clicked_positions);
   }
+  if (check_game_complete(button_data->app_config->game_config)) {
+    gtk_stack_set_visible_child_name(
+        GTK_STACK(button_data->app_config->uiconfig->stack),
+        "game_complete_page");
+    free(button_data->clicked_positions->positions);
+    free(button_data->clicked_positions);
+  };
   if (gtk_widget_has_css_class(widget, "selected")) {
     gtk_widget_remove_css_class(widget, "selected");
   } else {

@@ -2,7 +2,7 @@
  * Choose Difficulty in Start Screen.
  */
 #include "callbacks.h"
-#include "pages.h"
+#include "screens.h"
 #include "typedefs.h"
 GtkWidget *home_screen(AppConfig *app_config) {
   GtkWidget *easy_button;

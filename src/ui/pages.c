@@ -1,4 +1,4 @@
-#include "pages.h"
+#include "screens.h"
 #include "typedefs.h"
 #include <gtk/gtk.h>
 GtkWidget *create_page(GtkWidget *stack, CreatePageParams page_params) {

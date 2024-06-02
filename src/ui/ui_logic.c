@@ -1,6 +1,6 @@
 #include "headers/ui_logic.h"
 #include "headers/typedefs.h"
-#include "pages.h"
+#include "screens.h"
 
 void setup_ui(GtkApplication *app, gpointer user_data) {
   UiConfig *uiconfig = malloc(sizeof(UiConfig));
