@@ -22,6 +22,7 @@ void add_or_remove_clicked_position(ClickedPositions *position,
   position->positions[position->clicked_count++] = new_position;
   config->attempts--;
 }
+
 void check_user_selection(ClickedPositions *position, GameConfig *game_config,
                           UiConfig *uiconfig) {
   for (int i = 0; i < game_config->total_words; ++i) {
@@ -29,37 +30,56 @@ void check_user_selection(ClickedPositions *position, GameConfig *game_config,
         is_word_found(position->positions, position->clicked_count,
                       game_config->game_state[i].coords,
                       game_config->game_state[i].word_length)) {
+
       for (int j = 0; j < game_config->game_state[i].word_length; j++) {
         int *coords = change_position_to_coordinate(
-            game_config->game_state->coords[j], game_config->table_length);
+            game_config->game_state[i].coords[j], game_config->table_length);
+
         gtk_widget_set_sensitive(uiconfig->buttons[coords[0]][coords[1]],
                                  FALSE);
         gtk_widget_add_css_class(uiconfig->buttons[coords[0]][coords[1]],
                                  "disabled_button");
       }
+
       gtk_widget_add_css_class(uiconfig->word_hint_labels[i], "label_strike");
       game_config->game_state[i].found = true;
     }
   }
+}
+bool check_game_complete(GameConfig *game_config) {
+  for (int i = 0; i < game_config->total_words; i++) {
+    if (!game_config->game_state[i].found) {
+      return false;
+    }
+  }
+  return true;
 }
 void on_button_clicked(GtkWidget *widget, gpointer data) {
   ButtonClickData *button_data =
       (ButtonClickData *)(data); // Retrieve the integer data
 
   add_or_remove_clicked_position(button_data->clicked_positions,
-                                 button_data->config,
+                                 button_data->app_config->game_config,
                                  button_data->new_position);
   // Check subset
-  check_user_selection(button_data->clicked_positions, button_data->config,
-                       button_data->uiconfig);
-
-  update_attempts(button_data->config->attempts,
-                  button_data->uiconfig->attempts_label);
+  check_user_selection(button_data->clicked_positions,
+                       button_data->app_config->game_config,
+                       button_data->app_config->uiconfig);
+  if (check_game_complete(button_data->app_config->game_config)) {
+    printf("Game Complete!");
+    gtk_stack_set_visible_child_name(
+        GTK_STACK(button_data->app_config->uiconfig->stack), "game_over_page");
+    free(button_data->clicked_positions->positions);
+    free(button_data->clicked_positions);
+    // Show Game Complete Scoring Screen.
+  };
+  update_attempts(button_data->app_config->game_config->attempts,
+                  button_data->app_config->uiconfig->attempts_label);
   // If attempts is 0, show Game Over screen.
-  if (button_data->config->attempts <= 0) {
+  if (button_data->app_config->game_config->attempts <= 0) {
 
-    gtk_stack_set_visible_child_name(GTK_STACK(button_data->uiconfig->stack),
-                                     "game_over_page");
+    gtk_stack_set_visible_child_name(
+        GTK_STACK(button_data->app_config->uiconfig->stack), "game_over_page");
     free(button_data->clicked_positions->positions);
     free(button_data->clicked_positions);
   }

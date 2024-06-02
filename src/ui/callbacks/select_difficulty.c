@@ -2,7 +2,7 @@
 #include "game_logic.h"
 #include "get_words.h"
 #include "grid_utils.h"
-#include "pages.h"
+#include "screens.h"
 #include "typedefs.h"
 #include "word_utils.h"
 #include <gtk/gtk.h>
@@ -17,10 +17,10 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
   params->game_config->words = malloc(5 * sizeof(char *));
   params->game_config->attempts = 0;
   if (strcmp(label, "Easy") == 0) {
-    params->game_config->attempts += 0;
+    params->game_config->attempts += 4;
     params->game_config->difficulty = EASY;
   } else if (strcmp(label, "Medium") == 0) {
-    params->game_config->attempts += 4;
+    params->game_config->attempts += 3;
     params->game_config->difficulty = MEDIUM;
   } else if (strcmp(label, "Hard") == 0) {
     params->game_config->attempts += 2;
@@ -40,16 +40,11 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
 
   params->game_config->game_state =
       malloc(params->game_config->total_words * sizeof(GameState));
-  // Generate a table
   initialize_grid(params);
-  // Allocate memory for gamestate
   initialize_game(params->game_config);
-  // TODO: Remove previous UI and generate new UI and add to stacks:
   generate_button_grids(params, params->uiconfig->button_grid);
   generate_words_hints_grid(params);
-  // Initialize Game Here
 
-  // TODO: Fire function to read words from respective files.
   gtk_stack_set_visible_child_name(GTK_STACK(params->uiconfig->stack),
                                    "game_page");
 }

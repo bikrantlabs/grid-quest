@@ -56,15 +56,6 @@ typedef struct {
   GtkWidget **word_hint_labels;
 } UiConfig;
 
-typedef struct {
-  int new_position;
-  ClickedPositions *clicked_positions;
-  GameConfig *config;
-  UiConfig *uiconfig;
-  GtkWidget *button;
-  GtkWidget *stack;
-} ButtonClickData;
-
 // typedef struct {
 //   GameConfig *config;
 //   UiConfig *uiconfig;
@@ -77,4 +68,12 @@ typedef struct {
   GameConfig *game_config;
   UiConfig *uiconfig;
 } AppConfig;
+
+typedef struct {
+  int new_position;
+  ClickedPositions *clicked_positions;
+  AppConfig *app_config;
+  GtkWidget *button;
+} ButtonClickData;
+
 #endif // DATA_H

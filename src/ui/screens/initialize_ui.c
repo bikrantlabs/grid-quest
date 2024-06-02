@@ -1,5 +1,5 @@
 #include "headers/typedefs.h"
-#include "pages.h"
+#include "screens.h"
 void destroy_g(GtkWidget *widget, gpointer data) { printf("Destroy"); }
 void initialize_ui(AppConfig *app_config, GtkWidget *window) {
   // Create Stack

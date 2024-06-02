@@ -34,9 +34,8 @@ void generate_button_grids(AppConfig *app_config, GtkWidget *grid) {
       ButtonClickData *button_data = malloc(sizeof(ButtonClickData));
       button_data->new_position = position;
       button_data->button = app_config->uiconfig->buttons[i][j];
-      button_data->config = app_config->game_config;
+      button_data->app_config = app_config;
       button_data->clicked_positions = clicked_positions;
-      button_data->uiconfig = app_config->uiconfig;
       gtk_widget_add_css_class(app_config->uiconfig->buttons[i][j],
                                "characters");
       g_signal_connect(app_config->uiconfig->buttons[i][j], "clicked",
