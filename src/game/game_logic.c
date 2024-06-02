@@ -14,6 +14,7 @@ void initialize_game(GameConfig *config) {
     GameState game_state;
     game_state.coords = malloc(selected_word.word_length * sizeof(int));
     int *coords;
+    int position;
     if (direction == VERTICAL) {
       direction = HORIZONTAL;
     } else {
@@ -21,22 +22,20 @@ void initialize_game(GameConfig *config) {
     }
     while (!is_position_valid) {
 
-      int position = choose_random_position(config->table_length);
+      position = choose_random_position(config->table_length);
 
       coords = change_position_to_coordinate(position, config->table_length);
 
       is_position_valid = validate_position(coords, config->table_length,
                                             selected_word, direction, config);
-      if (is_position_valid) {
-
-        game_state.direction = direction;
-        game_state.word = selected_word.word;
-        game_state.word_length = selected_word.word_length;
-        place_word_in_table(selected_word, coords, config, game_state);
-        config->game_state[i] = game_state;
-        printf("GAMESTATEWORD-LENGTH: %s\n", config->game_state[i].word);
-      }
     }
+    // Out of while loop, the position is valid.
+    game_state.direction = direction;
+    game_state.word = selected_word.word;
+    game_state.word_length = selected_word.word_length;
+    game_state.found = false;
+    place_word_in_table(selected_word, coords, config, game_state);
+    config->game_state[i] = game_state;
   }
   fill_grid_with_characters(config);
 }

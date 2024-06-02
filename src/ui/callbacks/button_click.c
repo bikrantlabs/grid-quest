@@ -1,6 +1,9 @@
 #include "callbacks.h"
+#include "grid_utils.h"
 #include "typedefs.h"
+#include "word_utils.h"
 #include <gtk/gtk.h>
+#include <stdbool.h>
 #include <stdlib.h>
 void remove_clicked_position(int index, ClickedPositions *positions) {
   for (int i = index; i < positions->clicked_count - 1; ++i) {
@@ -19,6 +22,26 @@ void add_or_remove_clicked_position(ClickedPositions *position,
   position->positions[position->clicked_count++] = new_position;
   config->attempts--;
 }
+void check_user_selection(ClickedPositions *position, GameConfig *game_config,
+                          UiConfig *uiconfig) {
+  for (int i = 0; i < game_config->total_words; ++i) {
+    if (!game_config->game_state[i].found &&
+        is_word_found(position->positions, position->clicked_count,
+                      game_config->game_state[i].coords,
+                      game_config->game_state[i].word_length)) {
+      for (int j = 0; j < game_config->game_state[i].word_length; j++) {
+        int *coords = change_position_to_coordinate(
+            game_config->game_state->coords[j], game_config->table_length);
+        gtk_widget_set_sensitive(uiconfig->buttons[coords[0]][coords[1]],
+                                 FALSE);
+        gtk_widget_add_css_class(uiconfig->buttons[coords[0]][coords[1]],
+                                 "disabled_button");
+      }
+      gtk_widget_add_css_class(uiconfig->word_hint_labels[i], "label_strike");
+      game_config->game_state[i].found = true;
+    }
+  }
+}
 void on_button_clicked(GtkWidget *widget, gpointer data) {
   ButtonClickData *button_data =
       (ButtonClickData *)(data); // Retrieve the integer data
@@ -26,10 +49,12 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
   add_or_remove_clicked_position(button_data->clicked_positions,
                                  button_data->config,
                                  button_data->new_position);
-  update_attempts(
-      button_data->config->attempts,
-      button_data->uiconfig->attempts_label); // TODO: Check subset for arrays
-                                              // and detect valid selection
+  // Check subset
+  check_user_selection(button_data->clicked_positions, button_data->config,
+                       button_data->uiconfig);
+
+  update_attempts(button_data->config->attempts,
+                  button_data->uiconfig->attempts_label);
   // If attempts is 0, show Game Over screen.
   if (button_data->config->attempts <= 0) {
 

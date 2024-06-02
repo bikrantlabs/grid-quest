@@ -55,7 +55,6 @@ void generate_words_hints_grid(AppConfig *app_config) {
     exit(EXIT_FAILURE);
   }
   char attempts[300];
-  printf("Attempts are : %d\n", app_config->game_config->attempts);
   snprintf(attempts, sizeof(attempts), "%d", app_config->game_config->attempts);
   GtkWidget *label = gtk_label_new("WORDS:");
   app_config->uiconfig->attempts_label = gtk_label_new(attempts);

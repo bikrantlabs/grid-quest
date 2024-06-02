@@ -73,19 +73,29 @@ int is_number_in_array(int arr[], int size, int number) {
  Checks if array two contains all elements of array one, and returns true or
  false
 */
-bool is_subset(int *array_one, int size_one, int *array_two, int size_two) {
-  printf("Is Subset Running: \n");
-  for (int i = 0; i < size_one; i++) {
-    bool found = false;
-    for (int j = 0; j < size_two; j++) {
-      if (array_one[i] == array_two[j]) {
-        found = true;
+bool is_word_found(int selected_coords[], int selected_count, int word_coords[],
+                   int word_count) {
+  if (selected_count < word_count) {
+    return false;
+  }
+
+  int matched[word_count];
+  memset(matched, 0, sizeof(matched));
+
+  for (int i = 0; i < word_count; ++i) {
+    for (int j = 0; j < selected_count; ++j) {
+      if (word_coords[i] == selected_coords[j]) {
+        matched[i] = 1;
         break;
       }
     }
-    if (!found) {
+  }
+
+  for (int i = 0; i < word_count; ++i) {
+    if (matched[i] == 0) {
       return false;
     }
   }
+
   return true;
 }

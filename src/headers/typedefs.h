@@ -1,6 +1,7 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 #include <gtk/gtk.h>
+#include <stdbool.h>
 typedef enum Direction { HORIZONTAL, VERTICAL } Direction;
 typedef enum Difficulty { EASY, MEDIUM, HARD } Difficulty;
 
@@ -10,6 +11,7 @@ typedef struct {
   char *word;
   int word_length;
   Direction direction;
+  bool found;
 } GameState;
 // The config struct needed to initialize the game
 typedef struct {

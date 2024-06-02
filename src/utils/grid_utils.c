@@ -110,9 +110,7 @@ void place_word_in_table(SelectedWord word, int *coords, GameConfig *config,
           change_coordinate_to_position(myCoords, config->table_length);
       game_state.coords[i] = position;
       // Whenever we place a letter in grid, increase no. of attempts
-      printf("Increasing the attemp: Prev attempts: %d\n", config->attempts);
       config->attempts++;
-      printf("New attempts: %d\n", config->attempts);
     } else {
       config->table[coords[0] + i][coords[1]] = toupper(game_state.word[i]);
       int myCoords[2];
@@ -122,9 +120,7 @@ void place_word_in_table(SelectedWord word, int *coords, GameConfig *config,
           change_coordinate_to_position(myCoords, config->table_length);
       game_state.coords[i] = position;
       // Whenever we place a letter in grid, increase no. of attempts
-      printf("Increasing the attemp: Prev attempts: %d\n", config->attempts);
       config->attempts++;
-      printf("New attempts: %d\n", config->attempts);
     }
   }
 }

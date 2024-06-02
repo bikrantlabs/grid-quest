@@ -3,6 +3,11 @@ button.selected {
     color: black;
 }
 
+button.selected.disabled_button {
+    background-color: #00e119;
+    color: black;
+}
+
 button.characters {
     min-height: 70px;
     min-width: 70px;
@@ -25,6 +30,11 @@ button.characters {
 .word_hint_label {
     margin-bottom: 20px;
     font-size: 32px;
+}
+
+.label_strike {
+    color: rgb(204, 204, 204);
+    text-decoration: line-through;
 }
 
 .word_hint {
