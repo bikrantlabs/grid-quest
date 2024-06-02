@@ -45,14 +45,12 @@ bool validate_position(int *coords, int grid_length, SelectedWord word,
     // printf("V: Word = %s, Length = %d", word.word, word.word_length);
     if (available_spaces) {
       // Check there are no other letters already filled there
-      int pos = 0;
       for (int i = coords[0]; i < word.word_length + coords[0]; i++) {
         // printf("Char: %c", config.table[i][coords[1]]);
         if (config->table[i][coords[1]] != '\0') {
           // printf("V: Returning false from null checker.....\n");
           return false;
         }
-        pos++;
       }
       return true;
     } else {
@@ -64,14 +62,12 @@ bool validate_position(int *coords, int grid_length, SelectedWord word,
         word.word_length <= grid_length - coords[1] ? true : false;
     // printf("H: Word = %s, Length = %d", word.word, word.word_length);
     if (available_spaces) {
-      int pos = 0;
 
       for (int i = coords[1]; i < word.word_length + coords[1]; i++) {
         if (config->table[coords[0]][i] != '\0') {
           // printf("H: Returning false from null checker.....\n");
           return false;
         }
-        pos++;
       }
 
       return true;
