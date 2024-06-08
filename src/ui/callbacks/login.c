@@ -1,4 +1,5 @@
 #include "callbacks.h"
+#include "login_utils.h"
 #include "typedefs.h"
 #include <gtk/gtk.h>
 void login(GtkButton *button, gpointer user_data) {
@@ -14,4 +15,6 @@ void login(GtkButton *button, gpointer user_data) {
   strcpy(app_config->game_config->password, password);
   g_print("%s\n", username); // I wanna print out what it's been typed in here
   g_print("%s\n", password); // I wanna print out what it's been typed in here
+  save_login_data(app_config->game_config->username,
+                  app_config->game_config->password);
 }
