@@ -56,6 +56,7 @@ typedef struct {
   GtkWidget **word_hint_labels;
   GtkWidget *game_complete_page;
   GtkWidget *game_over_page;
+  GtkWidget *window;
 } UiConfig;
 
 typedef struct {
@@ -69,5 +70,8 @@ typedef struct {
   AppConfig *app_config;
   GtkWidget *button;
 } ButtonClickData;
-
+typedef struct {
+  int total_words;
+  char **words;
+} LoadWordsReturn;
 #endif // DATA_H

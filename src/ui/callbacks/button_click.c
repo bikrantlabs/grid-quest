@@ -1,6 +1,7 @@
 #include "callbacks.h"
 #include "grid_utils.h"
 #include "typedefs.h"
+#include "ui_logic.h"
 #include "word_utils.h"
 #include <gtk/gtk.h>
 #include <stdbool.h>
@@ -70,16 +71,18 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
                   button_data->app_config->uiconfig->attempts_label);
   // If attempts is 0, show Game Over screen.
   if (button_data->app_config->game_config->attempts <= 0) {
-
-    gtk_stack_set_visible_child_name(
-        GTK_STACK(button_data->app_config->uiconfig->stack), "game_over_page");
-    free(button_data->clicked_positions->positions);
-    free(button_data->clicked_positions);
+    open_dialog(button_data->app_config);
+    // gtk_stack_set_visible_child_name(
+    //     GTK_STACK(button_data->app_config->uiconfig->stack),
+    //     "game_over_page");
+    // free(button_data->clicked_positions->positions);
+    // free(button_data->clicked_positions);
   }
   if (check_game_complete(button_data->app_config->game_config)) {
-    gtk_stack_set_visible_child_name(
-        GTK_STACK(button_data->app_config->uiconfig->stack),
-        "game_complete_page");
+    open_dialog(button_data->app_config);
+    // gtk_stack_set_visible_child_name(
+    //     GTK_STACK(button_data->app_config->uiconfig->stack),
+    //     "game_complete_page");
     free(button_data->clicked_positions->positions);
     free(button_data->clicked_positions);
   };

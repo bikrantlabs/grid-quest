@@ -1,4 +1,5 @@
 #include "callbacks.h"
+#include "file_utils.h"
 #include "game_logic.h"
 #include "get_words.h"
 #include "grid_utils.h"
@@ -13,25 +14,29 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
   const gchar *label = gtk_button_get_label(button);
   // Allocate all memory only after selecting difficulty
   params->game_config = malloc(sizeof(GameConfig));
-
+  LoadWordsReturn *words_data;
   params->game_config->words = malloc(5 * sizeof(char *));
   params->game_config->attempts = 0;
   if (strcmp(label, "Easy") == 0) {
     params->game_config->attempts += 4;
     params->game_config->difficulty = EASY;
+    words_data = load_words("../src/data/easy_words.txt", 5);
   } else if (strcmp(label, "Medium") == 0) {
     params->game_config->attempts += 3;
     params->game_config->difficulty = MEDIUM;
+    words_data = load_words("../src/data/medium_words.txt", 5);
   } else if (strcmp(label, "Hard") == 0) {
     params->game_config->attempts += 2;
     params->game_config->difficulty = HARD;
+    words_data = load_words("../src/data/hard_words.txt", 5);
   } else {
     params->game_config->attempts += 4;
     params->game_config->difficulty = MEDIUM;
+    words_data = load_words("../src/data/medium_words.txt", 5);
   }
   RandomSelectedWords *random_word = get_words(params->game_config->difficulty);
-  params->game_config->words = random_word->words;
-  params->game_config->total_words = random_word->total_words;
+  params->game_config->words = words_data->words;
+  params->game_config->total_words = words_data->total_words;
 
   int longest_word = longest_word_in_array(params->game_config->words,
                                            params->game_config->total_words);
