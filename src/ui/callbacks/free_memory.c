@@ -52,7 +52,6 @@ void free_game_config(AppConfig *app_config) {
   }
   free(app_config->game_config->words);
   free(app_config->game_config->table);
-  free(app_config->game_config);
 }
 
 void free_timer_data(AppConfig *app_config) {

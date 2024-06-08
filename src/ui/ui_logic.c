@@ -6,6 +6,7 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   UiConfig *uiconfig = malloc(sizeof(UiConfig));
   AppConfig *app_config = malloc(sizeof(AppConfig));
   app_config->uiconfig = uiconfig;
+  app_config->game_config = malloc(sizeof(GameConfig));
 
   GtkWidget *window = gtk_application_window_new(app);
   app_config->uiconfig->window = window;

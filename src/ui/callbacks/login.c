@@ -8,7 +8,7 @@
  */
 void login(GtkButton *button, gpointer user_data) {
   AppConfig *app_config = (AppConfig *)user_data;
-  app_config->game_config = malloc(sizeof(GameConfig));
+
   const char *username =
       gtk_entry_buffer_get_text((app_config->uiconfig->username_input));
   const char *password =
@@ -19,13 +19,14 @@ void login(GtkButton *button, gpointer user_data) {
   strcpy(app_config->game_config->password, password);
   if (check_user_exists(app_config->game_config->username,
                         app_config->game_config->password)) {
-    g_print("User exists %s %s\n", app_config->game_config->username,
-            app_config->game_config->password);
-  } else {
-    g_print("User doesn't exists %s %s\n", app_config->game_config->username,
-            app_config->game_config->password);
+    app_config->game_config->new_user = false;
 
+  } else {
     save_login_data(app_config->game_config->username,
                     app_config->game_config->password);
+    app_config->game_config->new_user = true;
   }
+  // TODO: Navigate to home_screen stack
+  gtk_stack_set_visible_child_name(GTK_STACK(app_config->uiconfig->stack),
+                                   "home_page");
 }
