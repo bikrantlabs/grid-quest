@@ -15,6 +15,13 @@ typedef struct {
 } GameState;
 // The config struct needed to initialize the game
 typedef struct {
+  int minutes;
+  int seconds;
+  guint timer_id; // Timer ID to manage the timeout function
+  GtkWidget *stack;
+} TimerData;
+
+typedef struct {
   int total_words;
   int table_length;
   char *filepath;
@@ -23,6 +30,7 @@ typedef struct {
   int attempts;
   Difficulty difficulty;
   GameState *game_state;
+  TimerData *timer_data;
 } GameConfig;
 
 typedef struct {
@@ -57,6 +65,7 @@ typedef struct {
   GtkWidget *game_complete_page;
   GtkWidget *game_over_page;
   GtkWidget *window;
+  GtkWidget *timer_label;
 } UiConfig;
 
 typedef struct {
@@ -74,4 +83,5 @@ typedef struct {
   int total_words;
   char **words;
 } LoadWordsReturn;
+
 #endif // DATA_H

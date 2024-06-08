@@ -37,6 +37,11 @@ button.characters {
     font-size: 18px;
 }
 
+.timer_label {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
 .label_strike {
     color: rgb(204, 204, 204);
     text-decoration: line-through;

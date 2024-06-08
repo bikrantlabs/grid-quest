@@ -1,5 +1,7 @@
 #include "callbacks.h"
+#include "free_memory.h"
 #include "grid_utils.h"
+#include "timer.h"
 #include "typedefs.h"
 #include "ui_logic.h"
 #include "word_utils.h"
@@ -72,10 +74,12 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
   if (button_data->app_config->game_config->attempts <= 0 &&
       !check_game_complete(button_data->app_config->game_config)) {
     open_dialog(false, button_data->app_config);
+    stop_timer(button_data->app_config);
     free_position_data(button_data->clicked_positions);
   }
   if (check_game_complete(button_data->app_config->game_config)) {
     open_dialog(true, button_data->app_config);
+    stop_timer(button_data->app_config);
     free_position_data(button_data->clicked_positions);
   };
   if (gtk_widget_has_css_class(widget, "selected")) {

@@ -1,4 +1,4 @@
-#include "callbacks.h"
+#include "free_memory.h"
 #include "typedefs.h"
 #include <gtk/gtk.h>
 void free_button_grids(AppConfig *app_config) {
@@ -39,6 +39,10 @@ void free_label_grids(AppConfig *app_config) {
     gtk_widget_unparent(app_config->uiconfig->attempts_label);
     g_object_unref(app_config->uiconfig->attempts_label);
   }
+  if (app_config->uiconfig->timer_label) {
+    gtk_widget_unparent(app_config->uiconfig->timer_label);
+    g_object_unref(app_config->uiconfig->timer_label);
+  }
 }
 
 void free_game_config(AppConfig *app_config) {
@@ -49,4 +53,8 @@ void free_game_config(AppConfig *app_config) {
   free(app_config->game_config->words);
   free(app_config->game_config->table);
   free(app_config->game_config);
+}
+
+void free_timer_data(AppConfig *app_config) {
+  free(app_config->game_config->timer_data);
 }

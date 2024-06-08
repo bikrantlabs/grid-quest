@@ -58,6 +58,8 @@ void generate_words_hints_grid(AppConfig *app_config) {
   snprintf(attempts, sizeof(attempts), "%d", app_config->game_config->attempts);
 
   GtkWidget *label = gtk_label_new("WORDS:");
+  app_config->uiconfig->timer_label = gtk_label_new("00:00");
+
   GtkWidget *attempt_label_wrapper = gtk_grid_new();
   gtk_widget_set_size_request(attempt_label_wrapper, 100, 50);
 
@@ -68,12 +70,16 @@ void generate_words_hints_grid(AppConfig *app_config) {
   gtk_grid_attach(GTK_GRID(attempt_label_wrapper),
                   app_config->uiconfig->attempts_label, 1, 0, 1, 1);
   gtk_widget_add_css_class(label, "word_hint_label");
+  gtk_widget_add_css_class(app_config->uiconfig->timer_label, "timer_label");
   gtk_widget_add_css_class(attempt_label_wrapper, "attempts_label");
 
   gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid),
-                  attempt_label_wrapper, 0, 0, 1, 1);
+                  app_config->uiconfig->timer_label, 0, 0, 1, 1);
 
-  gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid), label, 0, 1,
+  gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid),
+                  attempt_label_wrapper, 0, 1, 1, 1);
+
+  gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid), label, 0, 2,
                   1, 1);
   // Create labels and add to grid
   for (int i = 0; i < app_config->game_config->total_words; ++i) {
@@ -83,7 +89,7 @@ void generate_words_hints_grid(AppConfig *app_config) {
     gtk_widget_add_css_class(app_config->uiconfig->word_hint_labels[i],
                              "word_hint");
     gtk_grid_attach(GTK_GRID(app_config->uiconfig->word_hints_grid),
-                    app_config->uiconfig->word_hint_labels[i], 0, i + 2, 1, 1);
+                    app_config->uiconfig->word_hint_labels[i], 0, i + 3, 1, 1);
   }
 }
 

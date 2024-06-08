@@ -4,6 +4,7 @@
 #include "get_words.h"
 #include "grid_utils.h"
 #include "screens.h"
+#include "timer.h"
 #include "typedefs.h"
 #include "word_utils.h"
 #include <gtk/gtk.h>
@@ -16,6 +17,9 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
   params->game_config = malloc(sizeof(GameConfig));
   LoadWordsReturn *words_data;
   params->game_config->words = malloc(5 * sizeof(char *));
+  params->game_config->timer_data = malloc(sizeof(TimerData));
+  params->game_config->timer_data->minutes = 0;
+  params->game_config->timer_data->seconds = 0;
   params->game_config->attempts = 0;
   if (strcmp(label, "Easy") == 0) {
     params->game_config->attempts += 4;
@@ -49,6 +53,8 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
   initialize_game(params->game_config);
   generate_button_grids(params, params->uiconfig->button_grid);
   generate_words_hints_grid(params);
+  params->game_config->timer_data->timer_id =
+      g_timeout_add_seconds(1, update_timer, params);
 
   gtk_stack_set_visible_child_name(GTK_STACK(params->uiconfig->stack),
                                    "game_page");
