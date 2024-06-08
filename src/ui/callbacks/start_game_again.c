@@ -1,13 +1,16 @@
 #include "callbacks.h"
 #include "typedefs.h"
-void start_game_again(GtkWidget *widget, gpointer data) {
-  AppConfig *params = (AppConfig *)data;
+void start_game_again(AppConfig *app_config) {
 
-  free_button_grids(params);
-  free_label_grids(params);
-  free_game_config(params);
+  free_button_grids(app_config);
+  free_label_grids(app_config);
+  free_game_config(app_config);
 
   // TODO: Navigate to home page
-  gtk_stack_set_visible_child_name(GTK_STACK(params->uiconfig->stack),
+  gtk_stack_set_visible_child_name(GTK_STACK(app_config->uiconfig->stack),
                                    "home_page");
+}
+void start_game_callback(GtkWidget *widget, gpointer data) {
+  AppConfig *params = (AppConfig *)data;
+  start_game_again(params);
 }

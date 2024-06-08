@@ -1,50 +1,60 @@
+#include "callbacks.h"
 #include "typedefs.h"
 #include "ui_logic.h"
 #include <gtk/gtk.h>
 static void button_clicked(GtkButton *button, gpointer user_data) {
+  AppConfig *params = (AppConfig *)user_data;
   // Print the label of the clicked button
   g_print("%s clicked\n", gtk_button_get_label(button));
+  gtk_window_destroy(GTK_WINDOW(params->uiconfig->window));
 }
-
-void open_dialog(gpointer user_data) {
+static void on_response(GtkDialog *dialog, gint response_id,
+                        gpointer user_data) {
   AppConfig *params = (AppConfig *)user_data;
+  switch (response_id) {
+  case GTK_RESPONSE_OK:
+    g_print("OK button clicked\n");
+    start_game_again(params);
+    break;
+  case GTK_RESPONSE_CANCEL:
+    g_print("Cancel button clicked\n");
+    gtk_window_destroy(GTK_WINDOW(params->uiconfig->window));
+    // Perform action for Cancel button
+    break;
+  default:
+    g_print("Other response received\n");
+    // Destroy the dialog
+    start_game_again(params);
+    break;
+  }
+  gtk_window_destroy(GTK_WINDOW(dialog));
+}
+void open_dialog(bool game_won, AppConfig *app_config) {
   GtkWidget *dialog, *label, *content_area;
   GtkDialogFlags flags;
 
   // Create the widgets
-  flags = GTK_DIALOG_DESTROY_WITH_PARENT;
-  dialog = gtk_dialog_new_with_buttons("Message",
-                                       GTK_WINDOW(params->uiconfig->window),
-                                       flags, "OK", GTK_RESPONSE_NONE, NULL);
+  dialog = gtk_dialog_new_with_buttons(
+      "Game over!", GTK_WINDOW(app_config->uiconfig->window),
+      GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, "Play again",
+      GTK_RESPONSE_OK, "Exit game", GTK_RESPONSE_CANCEL, NULL);
   content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-  label = gtk_label_new("HELLO");
 
-  // Ensure that the dialog box is destroyed when the user responds
+  label = gtk_label_new(game_won ? "You Won!" : "You Lose!");
 
-  g_signal_connect_swapped(dialog, "response", G_CALLBACK(gtk_window_destroy),
-                           dialog);
+  gtk_widget_add_css_class(label, "game-over-label");
 
-  // Add the label, and show everything we’ve added
+  GtkWidget *play_again_btn =
+      gtk_dialog_get_widget_for_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
+  gtk_widget_add_css_class(play_again_btn, "dialog_ok-btn");
+
+  GtkWidget *exit_game_btn = gtk_dialog_get_widget_for_response(
+      GTK_DIALOG(dialog), GTK_RESPONSE_CANCEL);
+  gtk_widget_add_css_class(exit_game_btn, "dialog_cancel-btn");
+
+  // Connect response signal
+  g_signal_connect(dialog, "response", G_CALLBACK(on_response), app_config);
 
   gtk_box_append(GTK_BOX(content_area), label);
   gtk_widget_show(dialog);
-  // GtkWidget *dialog;
-  // GtkWidget *button1;
-  // GtkWidget *button2;
-  // GtkWidget *button3;
-  // GtkDialogFlags flags = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
-
-  // dialog = gtk_dialog_new_with_buttons(
-  //     "Game Over!", GTK_WINDOW(params->uiconfig->window), flags, "Cancel",
-  //     GTK_RESPONSE_CANCEL, "OK", GTK_RESPONSE_OK, NULL);
-  // g_signal_connect_swapped(dialog, "response",
-  // G_CALLBACK(gtk_window_destroy),
-  //                          dialog);
-  // button1 = gtk_button_new_with_label("Button 1");
-  // button2 = gtk_button_new_with_label("Button 2");
-  // button3 = gtk_button_new_with_label("Button 3");
-
-  // g_signal_connect(button1, "clicked", G_CALLBACK(button_clicked), NULL);
-  // g_signal_connect(button2, "clicked", G_CALLBACK(button_clicked), NULL);
-  // g_signal_connect(button3, "clicked", G_CALLBACK(button_clicked), NULL);
 }

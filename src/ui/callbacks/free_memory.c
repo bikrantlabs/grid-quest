@@ -17,6 +17,10 @@ void free_button_grids(AppConfig *app_config) {
     free(app_config->uiconfig->buttons);
   }
 }
+void free_position_data(ClickedPositions *clicked_positions) {
+  free(clicked_positions->positions);
+  free(clicked_positions);
+}
 void free_label_grids(AppConfig *app_config) {
   if (app_config->uiconfig->word_hint_labels) {
     for (int i = 0; i < app_config->game_config->total_words; ++i) {

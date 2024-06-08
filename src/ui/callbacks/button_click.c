@@ -5,7 +5,6 @@
 #include "word_utils.h"
 #include <gtk/gtk.h>
 #include <stdbool.h>
-#include <stdlib.h>
 void remove_clicked_position(int index, ClickedPositions *positions) {
   for (int i = index; i < positions->clicked_count - 1; ++i) {
     positions->positions[i] = positions->positions[i + 1];
@@ -70,21 +69,14 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
   update_attempts(button_data->app_config->game_config->attempts,
                   button_data->app_config->uiconfig->attempts_label);
   // If attempts is 0, show Game Over screen.
-  if (button_data->app_config->game_config->attempts <= 0) {
-    open_dialog(button_data->app_config);
-    // gtk_stack_set_visible_child_name(
-    //     GTK_STACK(button_data->app_config->uiconfig->stack),
-    //     "game_over_page");
-    // free(button_data->clicked_positions->positions);
-    // free(button_data->clicked_positions);
+  if (button_data->app_config->game_config->attempts <= 0 &&
+      !check_game_complete(button_data->app_config->game_config)) {
+    open_dialog(false, button_data->app_config);
+    free_position_data(button_data->clicked_positions);
   }
   if (check_game_complete(button_data->app_config->game_config)) {
-    open_dialog(button_data->app_config);
-    // gtk_stack_set_visible_child_name(
-    //     GTK_STACK(button_data->app_config->uiconfig->stack),
-    //     "game_complete_page");
-    free(button_data->clicked_positions->positions);
-    free(button_data->clicked_positions);
+    open_dialog(true, button_data->app_config);
+    free_position_data(button_data->clicked_positions);
   };
   if (gtk_widget_has_css_class(widget, "selected")) {
     gtk_widget_remove_css_class(widget, "selected");

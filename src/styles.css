@@ -46,3 +46,27 @@ button.characters {
     margin-bottom: 10px;
     font-size: 24px;
 }
+
+.dialog {
+    padding: 3rem;
+}
+
+.dialog_ok-btn {
+    min-height: 40px;
+    min-width: 50px;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.dialog_cancel-btn {
+    min-height: 40px;
+    min-width: 50px;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.game-over-label {
+    font-size: 28px;
+    margin-bottom: 20px;
+
+}

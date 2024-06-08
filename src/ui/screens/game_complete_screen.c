@@ -37,7 +37,7 @@ GtkWidget *game_complete_screen(AppConfig *app_config) {
   gtk_widget_add_css_class(grid, "select-level-grid");
   gtk_widget_add_css_class(start_again, "select-level-btn");
 
-  g_signal_connect(start_again, "clicked", G_CALLBACK(start_game_again),
+  g_signal_connect(start_again, "clicked", G_CALLBACK(start_game_callback),
                    app_config);
 
   return grid;
