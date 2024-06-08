@@ -2,6 +2,10 @@
 #include "login_utils.h"
 #include "typedefs.h"
 #include <gtk/gtk.h>
+/**
+ * If username/password matches in credentials.txt, user will be logged in,
+ * otherwise a new user will be created.
+ */
 void login(GtkButton *button, gpointer user_data) {
   AppConfig *app_config = (AppConfig *)user_data;
   app_config->game_config = malloc(sizeof(GameConfig));
@@ -13,8 +17,15 @@ void login(GtkButton *button, gpointer user_data) {
   app_config->game_config->password = (char *)malloc(strlen(password) + 1);
   strcpy(app_config->game_config->username, username);
   strcpy(app_config->game_config->password, password);
-  g_print("%s\n", username); // I wanna print out what it's been typed in here
-  g_print("%s\n", password); // I wanna print out what it's been typed in here
-  save_login_data(app_config->game_config->username,
-                  app_config->game_config->password);
+  if (check_user_exists(app_config->game_config->username,
+                        app_config->game_config->password)) {
+    g_print("User exists %s %s\n", app_config->game_config->username,
+            app_config->game_config->password);
+  } else {
+    g_print("User doesn't exists %s %s\n", app_config->game_config->username,
+            app_config->game_config->password);
+
+    save_login_data(app_config->game_config->username,
+                    app_config->game_config->password);
+  }
 }
