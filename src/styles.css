@@ -75,3 +75,19 @@ button.characters {
     margin-bottom: 20px;
 
 }
+
+.login-btn {
+    font-size: 18px;
+    margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.login-label {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.username-grid {
+    margin-bottom: 20px
+}

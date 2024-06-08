@@ -24,6 +24,9 @@ typedef struct {
 typedef struct {
   int total_words;
   int table_length;
+  char *username;
+  char *password;
+  bool new_user;
   char *filepath;
   char **words;
   char **table;
@@ -62,10 +65,11 @@ typedef struct {
   GtkWidget *game_page;
   GtkWidget ***buttons;
   GtkWidget **word_hint_labels;
-  GtkWidget *game_complete_page;
-  GtkWidget *game_over_page;
+  GtkWidget *login_page;
   GtkWidget *window;
   GtkWidget *timer_label;
+  GtkEntryBuffer *username_input;
+  GtkEntryBuffer *password_input;
 } UiConfig;
 
 typedef struct {

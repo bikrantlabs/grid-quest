@@ -14,7 +14,7 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
   AppConfig *params = (AppConfig *)user_data;
   const gchar *label = gtk_button_get_label(button);
   // Allocate all memory only after selecting difficulty
-  params->game_config = malloc(sizeof(GameConfig));
+
   LoadWordsReturn *words_data;
   params->game_config->words = malloc(5 * sizeof(char *));
   params->game_config->timer_data = malloc(sizeof(TimerData));

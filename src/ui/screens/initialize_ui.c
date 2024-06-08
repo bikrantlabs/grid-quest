@@ -12,19 +12,17 @@ void initialize_ui(AppConfig *app_config, GtkWidget *window) {
 
   // Home Page
   CreatePageParams home_page_params = {"home_page", "Home Page"};
-  CreatePageParams game_over_page_params = {"game_over_page", "Game Over Page"};
-  CreatePageParams game_complete_page_params = {"game_complete_page",
-                                                "Game Complete Page"};
+  CreatePageParams login_page_params = {"login_page", "Login Page"};
   GtkWidget *home_page = create_page(stack, home_page_params);
-  GtkWidget *game_over_page = create_page(stack, game_over_page_params);
-  GtkWidget *game_complete_page = create_page(stack, game_complete_page_params);
+  GtkWidget *login_page = create_page(stack, login_page_params);
+  app_config->uiconfig->login_page = login_page;
   // Create the game page
   CreatePageParams game_page_garams = {"game_page", "Game Page"};
   GtkWidget *game_page = create_page(stack, game_page_garams);
   gtk_widget_set_halign(game_page, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(game_page, GTK_ALIGN_CENTER);
   app_config->uiconfig->game_page = game_page;
-  app_config->uiconfig->game_over_page = game_over_page;
+
   // Wrapper Grid
   GtkWidget *wrapper_grid = gtk_grid_new();
   gtk_grid_set_row_homogeneous(GTK_GRID(wrapper_grid), TRUE);
@@ -48,14 +46,12 @@ void initialize_ui(AppConfig *app_config, GtkWidget *window) {
   app_config->uiconfig->word_hints_grid = word_hints_grid;
   gtk_grid_attach(GTK_GRID(wrapper_grid), word_hints_grid, 9, 0, 2, 1);
 
-  // Start Game Button
   GtkWidget *start_screen_grid = home_screen(app_config);
-  app_config->uiconfig->game_complete_page = game_complete_page;
   gtk_box_append(GTK_BOX(home_page), start_screen_grid);
-  GtkWidget *_game_over_screen = game_over_screen(app_config);
-  gtk_box_append(GTK_BOX(game_over_page), _game_over_screen);
-  GtkWidget *_game_complete_screen = game_complete_screen(app_config);
-  gtk_box_append(GTK_BOX(game_complete_page), _game_complete_screen);
+
+  // GtkWidget *login_screen = login_screen(app_config);
+  GtkWidget *login_screen_grid = login_screen(app_config);
+  gtk_box_append(GTK_BOX(login_page), login_screen_grid);
 
   g_signal_connect(stack, "destroy", G_CALLBACK(destroy_g), NULL);
 }

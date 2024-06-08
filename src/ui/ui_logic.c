@@ -15,7 +15,7 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   // Create Stack
   initialize_ui(app_config, window);
 
-  gtk_stack_set_visible_child_name(GTK_STACK(uiconfig->stack), "home_page");
+  gtk_stack_set_visible_child_name(GTK_STACK(uiconfig->stack), "login_page");
 
   // Apply CSS
   apply_css("../src/styles.css");
