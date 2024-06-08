@@ -59,6 +59,8 @@ void generate_words_hints_grid(AppConfig *app_config) {
 
   GtkWidget *label = gtk_label_new("WORDS:");
   GtkWidget *attempt_label_wrapper = gtk_grid_new();
+  gtk_widget_set_size_request(attempt_label_wrapper, 100, 50);
+
   gtk_grid_attach(GTK_GRID(attempt_label_wrapper), attempt_word, 0, 0, 1, 1);
 
   app_config->uiconfig->attempts_label = gtk_label_new(attempts);
