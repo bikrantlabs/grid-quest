@@ -1,4 +1,5 @@
 #include "callbacks.h"
+#include "file_utils.h"
 #include "free_memory.h"
 #include "grid_utils.h"
 #include "timer.h"
@@ -48,7 +49,7 @@ void check_user_selection(ClickedPositions *position, GameConfig *game_config,
     }
   }
 }
-bool check_game_complete(GameConfig *game_config) {
+bool game_complete(GameConfig *game_config) {
   for (int i = 0; i < game_config->total_words; i++) {
     if (!game_config->game_state[i].found) {
       return false;
@@ -72,15 +73,17 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
                   button_data->app_config->uiconfig->attempts_label);
   // If attempts is 0, show Game Over screen.
   if (button_data->app_config->game_config->attempts <= 0 &&
-      !check_game_complete(button_data->app_config->game_config)) {
+      !game_complete(button_data->app_config->game_config)) {
     open_dialog(false, button_data->app_config);
     stop_timer(button_data->app_config);
     free_position_data(button_data->clicked_positions);
   }
-  if (check_game_complete(button_data->app_config->game_config)) {
+  if (game_complete(button_data->app_config->game_config)) {
     open_dialog(true, button_data->app_config);
     stop_timer(button_data->app_config);
     free_position_data(button_data->clicked_positions);
+    // TODO: Save timing score in scores.txt file
+    save_scores(button_data->app_config);
   };
   if (gtk_widget_has_css_class(widget, "selected")) {
     gtk_widget_remove_css_class(widget, "selected");

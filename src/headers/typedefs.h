@@ -17,6 +17,11 @@ typedef struct {
 typedef struct {
   int minutes;
   int seconds;
+} Time;
+typedef struct {
+  int minutes;
+  int seconds;
+  int flat;
   guint timer_id; // Timer ID to manage the timeout function
   GtkWidget *stack;
 } TimerData;
@@ -68,6 +73,7 @@ typedef struct {
   GtkWidget *login_page;
   GtkWidget *window;
   GtkWidget *timer_label;
+  GtkWidget *new_user_label;
   GtkEntryBuffer *username_input;
   GtkEntryBuffer *password_input;
 } UiConfig;

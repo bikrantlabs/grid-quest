@@ -5,7 +5,6 @@ gboolean update_timer(gpointer user_data) {
   AppConfig *app_config = (AppConfig *)user_data;
 
   // Update the time
-  printf("Timer is: %d\n", app_config->game_config->timer_data->seconds);
 
   app_config->game_config->timer_data->seconds++;
   if (app_config->game_config->timer_data->seconds == 60) {

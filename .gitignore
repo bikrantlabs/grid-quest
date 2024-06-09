@@ -1,3 +1,4 @@
 .cache/
 build/
 credentials.txt
+scores.txt
