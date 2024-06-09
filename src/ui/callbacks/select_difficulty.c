@@ -4,6 +4,7 @@
 #include "get_words.h"
 #include "grid_utils.h"
 #include "screens.h"
+#include "time_converter.h"
 #include "timer.h"
 #include "typedefs.h"
 #include "word_utils.h"
@@ -37,6 +38,14 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
     params->game_config->attempts += 4;
     params->game_config->difficulty = MEDIUM;
     words_data = load_words("../src/data/medium_words.txt", 5);
+  }
+  // Get Scores:
+  if (check_score_exists(params->game_config->username)) {
+    int score = get_score(params->game_config->username);
+    Time *time = convert_to_minutes(score);
+    snprintf(params->game_config->previous_score,
+             sizeof(params->game_config->previous_score), "%02d:%02d",
+             time->minutes, time->seconds);
   }
   RandomSelectedWords *random_word = get_words(params->game_config->difficulty);
   params->game_config->words = words_data->words;

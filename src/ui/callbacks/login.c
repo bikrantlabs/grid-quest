@@ -1,5 +1,7 @@
 #include "callbacks.h"
+#include "file_utils.h"
 #include "login_utils.h"
+#include "time_converter.h"
 #include "typedefs.h"
 #include <gtk/gtk.h>
 /**

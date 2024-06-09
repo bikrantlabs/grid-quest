@@ -36,6 +36,7 @@ typedef struct {
   char **words;
   char **table;
   int attempts;
+  char previous_score[10];
   Difficulty difficulty;
   GameState *game_state;
   TimerData *timer_data;
@@ -73,9 +74,9 @@ typedef struct {
   GtkWidget *login_page;
   GtkWidget *window;
   GtkWidget *timer_label;
-  GtkWidget *new_user_label;
   GtkEntryBuffer *username_input;
   GtkEntryBuffer *password_input;
+  GtkWidget *score_grid;
 } UiConfig;
 
 typedef struct {

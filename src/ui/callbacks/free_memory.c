@@ -43,6 +43,11 @@ void free_label_grids(AppConfig *app_config) {
     gtk_widget_unparent(app_config->uiconfig->timer_label);
     g_object_unref(app_config->uiconfig->timer_label);
   }
+  if (app_config->uiconfig->score_grid) {
+
+    gtk_widget_unparent(app_config->uiconfig->score_grid);
+    g_object_unref(app_config->uiconfig->score_grid);
+  }
 }
 
 void free_game_config(AppConfig *app_config) {
