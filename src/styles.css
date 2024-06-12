@@ -91,3 +91,34 @@ button.characters {
 .username-grid {
     margin-bottom: 20px;
 }
+
+.score_label {
+    font-size: 22px;
+    margin-top: 20px;
+}
+
+.top_scores {
+    font-size: 24px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.table_header {
+    font-size: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+
+}
+
+.table_data {
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.go_home_button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 22px;
+    margin-top: 30px;
+}

@@ -35,7 +35,7 @@ void update_or_add_user(UserScore *users, int *num_users, const char *username,
 void save_scores(AppConfig *app_config) {
   FILE *fp;
 
-  fp = fopen("../scores.txt", "r");
+  fp = fopen("../scores.txt", "a+");
 
   if (fp == NULL) {
     printf("Cannot open scores.txt for writing\n");

@@ -14,14 +14,16 @@
 void select_difficulty(GtkButton *button, gpointer user_data) {
   AppConfig *params = (AppConfig *)user_data;
   const gchar *label = gtk_button_get_label(button);
-  // Allocate all memory only after selecting difficulty
+  // Free memory for top scores after we enter game screen
 
+  // Allocate all memory only after selecting difficulty
   LoadWordsReturn *words_data;
   params->game_config->words = malloc(5 * sizeof(char *));
   params->game_config->timer_data = malloc(sizeof(TimerData));
   params->game_config->timer_data->minutes = 0;
   params->game_config->timer_data->seconds = 0;
   params->game_config->attempts = 0;
+
   if (strcmp(label, "Easy") == 0) {
     params->game_config->attempts += 4;
     params->game_config->difficulty = EASY;
@@ -40,14 +42,9 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
     words_data = load_words("../src/data/medium_words.txt", 5);
   }
   // Get Scores:
-  if (check_score_exists(params->game_config->username)) {
-    int score = get_score(params->game_config->username);
-    params->game_config->previous_score_flat = score;
-    Time *time = convert_to_minutes(score);
-    snprintf(params->game_config->previous_score,
-             sizeof(params->game_config->previous_score), "%02d:%02d",
-             time->minutes, time->seconds);
-  }
+
+  get_score(params);
+
   RandomSelectedWords *random_word = get_words(params->game_config->difficulty);
   params->game_config->words = words_data->words;
   params->game_config->total_words = words_data->total_words;

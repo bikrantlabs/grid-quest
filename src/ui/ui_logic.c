@@ -3,12 +3,12 @@
 #include "screens.h"
 
 void setup_ui(GtkApplication *app, gpointer user_data) {
-  UiConfig *uiconfig = malloc(sizeof(UiConfig));
   AppConfig *app_config = malloc(sizeof(AppConfig));
-  app_config->uiconfig = uiconfig;
+  app_config->uiconfig = malloc(sizeof(UiConfig));
   app_config->game_config = malloc(sizeof(GameConfig));
 
   GtkWidget *window = gtk_application_window_new(app);
+  app_config->uiconfig->score_grid = gtk_grid_new();
   app_config->uiconfig->window = window;
   gtk_window_set_title(GTK_WINDOW(window), "Word Puzzle Game");
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
@@ -16,7 +16,8 @@ void setup_ui(GtkApplication *app, gpointer user_data) {
   // Create Stack
   initialize_ui(app_config, window);
 
-  gtk_stack_set_visible_child_name(GTK_STACK(uiconfig->stack), "login_page");
+  gtk_stack_set_visible_child_name(GTK_STACK(app_config->uiconfig->stack),
+                                   "login_page");
 
   // Apply CSS
   apply_css("../src/styles.css");

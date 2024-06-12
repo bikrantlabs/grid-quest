@@ -80,6 +80,11 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
     free_position_data(button_data->clicked_positions);
   }
   if (game_complete(button_data->app_config->game_config)) {
+    int current_score = button_data->app_config->game_config->timer_data->flat;
+    int prev_score = button_data->app_config->game_config->previous_score_flat;
+    printf("Game Complete! New User: %d",
+           button_data->app_config->game_config->new_user ? 1 : -1);
+
     open_dialog(true, button_data->app_config);
     stop_timer(button_data->app_config);
     free_position_data(button_data->clicked_positions);
@@ -87,13 +92,16 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
     button_data->app_config->game_config->timer_data->flat = convert_to_seconds(
         button_data->app_config->game_config->timer_data->minutes,
         button_data->app_config->game_config->timer_data->seconds);
-    printf("Scores: %d %d\n",
-           button_data->app_config->game_config->timer_data->flat,
-           button_data->app_config->game_config->previous_score_flat);
-    if (button_data->app_config->game_config->timer_data->flat <
-        button_data->app_config->game_config->previous_score_flat) {
 
+    if (button_data->app_config->game_config->new_user) {
+      printf("New user is false\n");
       save_scores(button_data->app_config);
+      button_data->app_config->game_config->new_user = false;
+    } else {
+      if (button_data->app_config->game_config->previous_score_flat >
+          button_data->app_config->game_config->timer_data->flat) {
+        save_scores(button_data->app_config);
+      }
     }
   };
   if (gtk_widget_has_css_class(widget, "selected")) {

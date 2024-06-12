@@ -56,14 +56,25 @@ void generate_words_hints_grid(AppConfig *app_config) {
 
   app_config->uiconfig->score_grid = gtk_grid_new();
   GtkWidget *new_user_label = gtk_label_new(
-      app_config->game_config->new_user ? "New User" : "Previous Best: ");
-
+      app_config->game_config->first_game == 1 ? "First Game"
+                                               : "Previous Best: ");
+  printf("First Game: %d\n", app_config->game_config->first_game);
   GtkWidget *previous_score =
       gtk_label_new(app_config->game_config->previous_score);
   gtk_grid_attach(GTK_GRID(app_config->uiconfig->score_grid), new_user_label, 0,
-                  0, 1, 1);
-  gtk_grid_attach(GTK_GRID(app_config->uiconfig->score_grid), previous_score, 1,
-                  0, 1, 1);
+                  0, app_config->game_config->first_game == 1 ? 2 : 1, 1);
+  if (app_config->game_config->first_game == 0) {
+    // Attaching to grid
+    printf("\nAttaching to Grid: %s\n",
+           app_config->game_config->first_game ? "True" : "False");
+    gtk_grid_attach(GTK_GRID(app_config->uiconfig->score_grid), previous_score,
+                    1, 0, 1, 1);
+  } else {
+    gtk_grid_set_row_homogeneous(GTK_GRID(app_config->uiconfig->score_grid),
+                                 TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(app_config->uiconfig->score_grid),
+                                    TRUE);
+  }
   char attempts[300];
   GtkWidget *attempt_word = gtk_label_new("Attempts left: ");
   snprintf(attempts, sizeof(attempts), "%d", app_config->game_config->attempts);

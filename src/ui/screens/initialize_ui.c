@@ -23,6 +23,13 @@ void initialize_ui(AppConfig *app_config, GtkWidget *window) {
   gtk_widget_set_valign(game_page, GTK_ALIGN_CENTER);
   app_config->uiconfig->game_page = game_page;
 
+  // Top Scores Page
+  CreatePageParams top_scores_page_params = {"top_scores_page",
+                                             "Top Scores Page"};
+  GtkWidget *_top_scores_page = create_page(stack, top_scores_page_params);
+  app_config->uiconfig->top_score_grid = _top_scores_page;
+  GtkWidget *top_scores_page_grid = top_score_screen(app_config);
+  gtk_box_append(GTK_BOX(_top_scores_page), top_scores_page_grid);
   // Wrapper Grid
   GtkWidget *wrapper_grid = gtk_grid_new();
   gtk_grid_set_row_homogeneous(GTK_GRID(wrapper_grid), TRUE);
@@ -35,7 +42,6 @@ void initialize_ui(AppConfig *app_config, GtkWidget *window) {
   gtk_widget_set_halign(game_page, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(game_page, GTK_ALIGN_CENTER);
   app_config->uiconfig->button_grid = button_grid;
-
   gtk_grid_attach(GTK_GRID(wrapper_grid), button_grid, 0, 0, 8, 1);
   //
   GtkWidget *word_hints_grid = gtk_grid_new();

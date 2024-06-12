@@ -27,17 +27,25 @@ typedef struct {
 } TimerData;
 
 typedef struct {
+  char *username;
+  int flat_seconds;
+} TopScores;
+
+typedef struct {
   int total_words;
   int table_length;
+  int total_score_count;
   char *username;
   char *password;
   bool new_user;
+  int first_game;
   char *filepath;
   char **words;
   char **table;
   int attempts;
   char previous_score[10];
   int previous_score_flat;
+  TopScores *top_scores;
   Difficulty difficulty;
   GameState *game_state;
   TimerData *timer_data;
@@ -68,16 +76,18 @@ typedef struct {
   GtkWidget *attempts_label;
   GtkWidget *stack;
   GtkWidget *button_grid;
-  GtkWidget *word_hints_grid;
   GtkWidget *game_page;
   GtkWidget ***buttons;
   GtkWidget **word_hint_labels;
+  GtkWidget *word_hints_grid;
   GtkWidget *login_page;
   GtkWidget *window;
   GtkWidget *timer_label;
   GtkEntryBuffer *username_input;
   GtkEntryBuffer *password_input;
   GtkWidget *score_grid;
+  GtkWidget **top_score_labels;
+  GtkWidget *top_score_grid;
 } UiConfig;
 
 typedef struct {
