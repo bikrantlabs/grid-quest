@@ -85,9 +85,9 @@ typedef struct {
   GtkWidget *timer_label;
   GtkEntryBuffer *username_input;
   GtkEntryBuffer *password_input;
-  GtkWidget *score_grid;
   GtkWidget **top_score_labels;
-  GtkWidget *top_score_grid;
+  GtkWidget *score_grid;
+  GtkWidget *top_score_parent_grid;
 } UiConfig;
 
 typedef struct {

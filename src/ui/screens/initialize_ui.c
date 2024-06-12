@@ -27,9 +27,10 @@ void initialize_ui(AppConfig *app_config, GtkWidget *window) {
   CreatePageParams top_scores_page_params = {"top_scores_page",
                                              "Top Scores Page"};
   GtkWidget *_top_scores_page = create_page(stack, top_scores_page_params);
-  app_config->uiconfig->top_score_grid = _top_scores_page;
-  GtkWidget *top_scores_page_grid = top_score_screen(app_config);
-  gtk_box_append(GTK_BOX(_top_scores_page), top_scores_page_grid);
+  // GtkWidget *top_scores_page_grid = top_score_screen(app_config);
+  GtkWidget *top_score_parent_grid = gtk_grid_new();
+  gtk_box_append(GTK_BOX(_top_scores_page), top_score_parent_grid);
+  app_config->uiconfig->top_score_parent_grid = top_score_parent_grid;
   // Wrapper Grid
   GtkWidget *wrapper_grid = gtk_grid_new();
   gtk_grid_set_row_homogeneous(GTK_GRID(wrapper_grid), TRUE);

@@ -93,10 +93,9 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
         button_data->app_config->game_config->timer_data->minutes,
         button_data->app_config->game_config->timer_data->seconds);
 
-    if (button_data->app_config->game_config->new_user) {
-      printf("New user is false\n");
+    if (button_data->app_config->game_config->first_game == 1) {
       save_scores(button_data->app_config);
-      button_data->app_config->game_config->new_user = false;
+      button_data->app_config->game_config->first_game = 0;
     } else {
       if (button_data->app_config->game_config->previous_score_flat >
           button_data->app_config->game_config->timer_data->flat) {
