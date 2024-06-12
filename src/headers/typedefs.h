@@ -37,6 +37,7 @@ typedef struct {
   char **table;
   int attempts;
   char previous_score[10];
+  int previous_score_flat;
   Difficulty difficulty;
   GameState *game_state;
   TimerData *timer_data;

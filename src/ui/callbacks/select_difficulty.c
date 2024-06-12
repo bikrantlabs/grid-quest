@@ -42,6 +42,7 @@ void select_difficulty(GtkButton *button, gpointer user_data) {
   // Get Scores:
   if (check_score_exists(params->game_config->username)) {
     int score = get_score(params->game_config->username);
+    params->game_config->previous_score_flat = score;
     Time *time = convert_to_minutes(score);
     snprintf(params->game_config->previous_score,
              sizeof(params->game_config->previous_score), "%02d:%02d",

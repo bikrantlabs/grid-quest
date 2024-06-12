@@ -56,6 +56,7 @@ void save_scores(AppConfig *app_config) {
   int seconds =
       convert_to_seconds(app_config->game_config->timer_data->minutes,
                          app_config->game_config->timer_data->seconds);
+
   update_or_add_user(users, &num_users, app_config->game_config->username,
                      seconds);
   qsort(users, num_users, sizeof(UserScore), compare);

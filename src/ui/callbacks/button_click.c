@@ -2,6 +2,7 @@
 #include "file_utils.h"
 #include "free_memory.h"
 #include "grid_utils.h"
+#include "time_converter.h"
 #include "timer.h"
 #include "typedefs.h"
 #include "ui_logic.h"
@@ -82,8 +83,18 @@ void on_button_clicked(GtkWidget *widget, gpointer data) {
     open_dialog(true, button_data->app_config);
     stop_timer(button_data->app_config);
     free_position_data(button_data->clicked_positions);
-    // TODO: Save timing score in scores.txt file
-    save_scores(button_data->app_config);
+    // Only save score if new score is better than previous
+    button_data->app_config->game_config->timer_data->flat = convert_to_seconds(
+        button_data->app_config->game_config->timer_data->minutes,
+        button_data->app_config->game_config->timer_data->seconds);
+    printf("Scores: %d %d\n",
+           button_data->app_config->game_config->timer_data->flat,
+           button_data->app_config->game_config->previous_score_flat);
+    if (button_data->app_config->game_config->timer_data->flat <
+        button_data->app_config->game_config->previous_score_flat) {
+
+      save_scores(button_data->app_config);
+    }
   };
   if (gtk_widget_has_css_class(widget, "selected")) {
     gtk_widget_remove_css_class(widget, "selected");
