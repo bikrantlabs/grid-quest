@@ -20,6 +20,7 @@ void initialize_game(GameConfig *config) {
     } else {
       direction = VERTICAL;
     }
+    int i = 0;
     while (!is_position_valid) {
 
       position = choose_random_position(config->table_length);
@@ -28,7 +29,9 @@ void initialize_game(GameConfig *config) {
 
       is_position_valid = validate_position(coords, config->table_length,
                                             selected_word, direction, config);
+      i++;
     }
+    printf("While Loop Time: %d for word: %s\n", i, selected_word.word);
     // Out of while loop, the position is valid.
     game_state.direction = direction;
     game_state.word = selected_word.word;
