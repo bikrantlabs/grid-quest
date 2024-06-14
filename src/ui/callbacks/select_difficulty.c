@@ -4,7 +4,6 @@
 #include "get_words.h"
 #include "grid_utils.h"
 #include "screens.h"
-#include "time_converter.h"
 #include "timer.h"
 #include "typedefs.h"
 #include "word_utils.h"
